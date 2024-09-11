@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=65.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "python-serviceplatformen"
+version = "0.0.1"
+authors = [
+  { name="ITK Development", email="itk-rpa@mkb.aarhus.dk" },
+]
+description = "Python modules for easier use of Kombit's serviceplatformen."
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+]
+dependencies = [
+  "requests == 2.*"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/itk-dev-rpa/python-serviceplatformen"
+"Bug Tracker" = "https://github.com/itk-dev-rpa/python-serviceplatformen/issues"
+
+[project.optional-dependencies]
+dev = [
+  "python-dotenv",
+  "flake8",
+  "pylint"
+]
