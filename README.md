@@ -32,7 +32,7 @@ ka = KombitAccess(cvr=cvr, cert_path=cert_path)
 
 ## Tests
 
-This project contains automated tests in the "test" folder.
+This project contains automated tests in the "tests" folder.
 To run these test you need to install the developer dependecies:
 
 ```bash
