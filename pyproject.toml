@@ -3,7 +3,7 @@ requires = ["setuptools>=65.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "python-serviceplatformen"
+name = "python_serviceplatformen"
 version = "0.0.1"
 authors = [
   { name="ITK Development", email="itk-rpa@mkb.aarhus.dk" },
@@ -16,12 +16,13 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
 ]
 dependencies = [
-  "requests == 2.*"
+  "requests == 2.*",
+  "cryptography"
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/itk-dev-rpa/python-serviceplatformen"
-"Bug Tracker" = "https://github.com/itk-dev-rpa/python-serviceplatformen/issues"
+"Homepage" = "https://github.com/itk-dev-rpa/python_serviceplatformen"
+"Bug Tracker" = "https://github.com/itk-dev-rpa/python_serviceplatformen/issues"
 
 [project.optional-dependencies]
 dev = [
