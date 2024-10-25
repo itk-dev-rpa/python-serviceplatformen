@@ -17,7 +17,8 @@ classifiers = [
 ]
 dependencies = [
   "requests == 2.*",
-  "cryptography"
+  "cryptography",
+  "xmlschema"
 ]
 
 [project.urls]
