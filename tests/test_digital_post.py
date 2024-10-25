@@ -1,13 +1,18 @@
 """Tests of the Kombit Digital Post API."""
+from datetime import datetime
 import unittest
 import os
+import uuid
+import base64
 
 from dotenv import load_dotenv
 
 from python_serviceplatformen.authentication import KombitAccess
 from python_serviceplatformen import digital_post
+from python_serviceplatformen.models.message import Message, MessageBody, MessageHeader, File, Sender, Recipient, MainDocument
+from python_serviceplatformen.date_helper import format_datetime
 
-load_dotenv()
+load_dotenv(override=True)
 
 # We don't care about duplicate code in tests
 # pylint: disable=R0801
@@ -16,25 +21,63 @@ load_dotenv()
 class DigitalPostTest(unittest.TestCase):
     """Test Digital Post functionality in the Kombit API."""
 
-    def test_is_registered(self):
-        """Test authentication."""
+    @classmethod
+    def setUpClass(cls) -> None:
         cvr = os.environ["KOMBIT_TEST_CVR"]
         cert_path = os.environ["KOMBIT_TEST_CERT_PATH"]
-        ka = KombitAccess(cvr=cvr, cert_path=cert_path, test=True)
+        cls.kombit_access = KombitAccess(cvr=cvr, cert_path=cert_path, test=True)
 
-        # Fictional test cpr
-        cpr = "2611740000"
+    def test_is_registered(self):
+        """Test authentication."""
+        cpr = os.environ['DIGITAL_POST_TEST_CPR']
 
-        result = digital_post.is_registered(cpr=cpr, service="digitalpost", kombit_access=ka)
+        result = digital_post.is_registered(cpr=cpr, service="digitalpost", kombit_access=self.kombit_access)
         self.assertTrue(result)
 
-        result = digital_post.is_registered(cpr=cpr, service="nemsms", kombit_access=ka)
+        result = digital_post.is_registered(cpr=cpr, service="nemsms", kombit_access=self.kombit_access)
         self.assertFalse(result)
 
         # Test with nonsense.
         # This should result in False
-        result = digital_post.is_registered(cpr="FooBar", service="digitalpost", kombit_access=ka)
+        result = digital_post.is_registered(cpr="FooBar", service="digitalpost", kombit_access=self.kombit_access)
         self.assertFalse(result)
+
+    def test_send_message(self):
+        cpr = os.environ['DIGITAL_POST_TEST_CPR']
+
+        m = Message(
+            MessageHeader=MessageHeader(
+                messageType="DIGITALPOST",
+                messageUUID=str(uuid.uuid4()),
+                label="Python Serviceplatformen Test",
+                mandatory="false",
+                legalNotification="false",
+                Sender=Sender(
+                    senderID=os.environ["KOMBIT_TEST_CVR"],
+                    idType="CVR",
+                    label="Python Serviceplatformen"
+                ),
+                Recipient=Recipient(
+                    recipientID=cpr,
+                    idType="CPR"
+                ),
+            ),
+            MessageBody_=MessageBody(
+                createdDateTime=format_datetime(datetime.now()),
+                MainDocument=MainDocument(
+                    Files=[
+                        File(
+                            encodingFormat="text/plain",
+                            filename="Besked.txt",
+                            language="da",
+                            content=base64.b64encode(b"Hello World").decode()
+                        )
+                    ]
+                )
+            )
+        )
+
+        digital_post.send_message("Digital Post", m, self.kombit_access)
 
 
 if __name__ == '__main__':
