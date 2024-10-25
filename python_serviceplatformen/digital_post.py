@@ -6,11 +6,14 @@ import urllib.parse
 import uuid
 from datetime import datetime
 from typing import Literal
+from xml.etree import ElementTree
 
 import requests
 
 from python_serviceplatformen.authentication import KombitAccess
 from python_serviceplatformen.date_helper import format_datetime
+from python_serviceplatformen.models import xml_util
+from python_serviceplatformen.models.message import Message, MessageBody, MessageHeader, File, Sender, Recipient, MainDocument
 
 
 def is_registered(cpr: str, service: Literal['digitalpost', 'nemsms'], kombit_access: KombitAccess) -> bool:
@@ -41,3 +44,41 @@ def is_registered(cpr: str, service: Literal['digitalpost', 'nemsms'], kombit_ac
     response = requests.get(url, params=parameters, headers=headers, timeout=10)
     response.raise_for_status()
     return response.json()['result']
+
+
+def send_message(message_type: Literal['Digital Post', 'NemSMS'],
+                 message: Message, kombit_access: KombitAccess) -> str:
+    """Send a Message object as Digital Post or NemSMS.
+
+    Args:
+        message_type: The type of message to send.
+        message: The Message object to send.
+        kombit_access: The KombitAccess objet used to authenticate.
+
+    Returns:
+        The uuid of the transaction to trace the message later.
+    """
+    url = urllib.parse.urljoin(kombit_access.environment, "service/KombiPostAfsend_1/memos")
+
+    transaction_id = str(uuid.uuid4())
+
+    headers = {
+        "X-TransaktionsId": transaction_id,
+        "X-TransaktionsTid": format_datetime(datetime.now()),
+        "authorization": kombit_access.get_access_token("http://entityid.kombit.dk/service/kombipostafsend/1"),
+        "Content-Type": "application/xml"
+    }
+
+    message_xml = xml_util.dataclass_to_xml(message)
+    xml_util.validate_memo(message_xml)
+
+    element = ElementTree.Element("kombi_request")
+    ElementTree.SubElement(element, "KombiValgKode").text = message_type
+    element.append(message_xml)
+
+    xml_body = ElementTree.tostring(element, encoding="utf8").decode()
+
+    response = requests.post(url=url, headers=headers, data=xml_body, timeout=10)
+    response.raise_for_status()
+
+    return transaction_id
