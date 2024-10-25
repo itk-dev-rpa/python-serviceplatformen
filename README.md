@@ -29,3 +29,21 @@ class and it will handle the rest for you.
 from python_serviceplatformen.authentication import KombitAccess
 ka = KombitAccess(cvr=cvr, cert_path=cert_path)
 ```
+
+## Tests
+
+This project contains automated tests in the "tests" folder.
+To run these test you need to install the developer dependecies:
+
+```bash
+pip install python_serviceplatformen[dev]
+```
+
+### Environment variables
+
+Create a .env file in the project folder and fill out these variables:
+
+```yaml
+KOMBIT_TEST_CVR = "XXXXXXXX"  # The cvr of the organization who owns the certificate
+KOMBIT_TEST_CERT_PATH = "C:\something\Certificate.pem"  # The path to the certificate file
+```
