@@ -27,20 +27,26 @@ class MessageXMLTest(unittest.TestCase):
                 label="Recipient Label",
                 recipientID="Recipient ID",
                 idType="CPR"
-            ),
-            message_uuid="Message UUID"
+            )
         )
 
-        s = xml_util.dataclass_to_xml_string(m)
+        # Set custom uuid for test purposes
+        m.MessageHeader.messageUUID = "fcdcf318-59b6-427c-9879-4f0af833d593"
 
-        self.assertIsInstance(s, str)
-        # TODO: Read this from external files
+        message_xml = xml_util.dataclass_to_xml(m)
+
+        # Check against schema
+        xml_util.validate_memo(message_xml)
+
+        # Compare to example xml
+        example_xml = ElementTree.parse("tests/message_xml/MeMo_NemSMS.xml").getroot()
+        _xml_compare(message_xml, example_xml)
 
     def test_digital_post_with_attached_files(self):
         """Test creating a Digital Post message
         with file attachments and convert it to XML.
         """
-        m = message.create_digital_post_with_attached_files(
+        m = message.create_digital_post_with_main_document(
             label="Label Text",
             sender=Sender(
                 label="Sender Label",
@@ -51,8 +57,6 @@ class MessageXMLTest(unittest.TestCase):
                 recipientID="Recipient ID",
                 idType="CPR"
             ),
-            message_uuid="Message UUID",
-            created_datetime=datetime(2000, 1, 1),
             files=(
                 File(
                     encodingFormat="text/plain",
@@ -69,10 +73,18 @@ class MessageXMLTest(unittest.TestCase):
             )
         )
 
-        s = xml_util.dataclass_to_xml_string(m)
+        # Set custom properties for test purposes
+        m.MessageHeader.messageUUID = "78212f5c-6d79-4012-8ed1-e2420243bd17"
+        m.MessageBody_.createdDateTime = datetime(2000, 1, 1, 0, 0, 0)
 
-        self.assertIsInstance(s, str)
-        # TODO: Read this from external files
+        message_xml = xml_util.dataclass_to_xml(m)
+
+        # Check against schema
+        xml_util.validate_memo(message_xml)
+
+        # Compare to example xml
+        example_xml = ElementTree.parse("tests/message_xml/MeMo_with_attachment.xml").getroot()
+        _xml_compare(message_xml, example_xml)
 
     def test_minimum_example(self):
         """Test converting to xml against the example file at
@@ -524,7 +536,7 @@ class MessageXMLTest(unittest.TestCase):
             )
         )
 
-        message_xml = xml_util.dataclass_to_xml(m, message.NAME_SPACES)
+        message_xml = xml_util.dataclass_to_xml(m)
 
         # Check against schema
         xml_util.validate_memo(message_xml)
@@ -540,7 +552,7 @@ def _xml_compare(x1: ElementTree.Element, x2: ElementTree.Element, path = "") ->
     Args:
         x1: The first element to compare.
         x2: The second element to compare
-        path: The path to the elements. Defaults to "".
+        path: The path to the elements used in error messages. Defaults to "".
 
     Raises:
         ValueError: If the elements or their children don't match.
@@ -565,7 +577,7 @@ def _xml_compare(x1: ElementTree.Element, x2: ElementTree.Element, path = "") ->
         raise ValueError(f"Tail doesn't match: {x1.tail} != {x2.tail}") from main_error
 
     if len(x1) != len(x2):
-        raise ValueError(f"Children length differs {len(x1)} != {len(x2)}")
+        raise ValueError(f"Children length differs {len(x1)} != {len(x2)}") from main_error
 
     for c1, c2 in zip(x1, x2):
         _xml_compare(c1, c2, f"{path} -> {x1.tag}")

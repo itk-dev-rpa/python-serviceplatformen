@@ -1,0 +1,35 @@
+<memo:Message xmlns:memo="https://DigitalPost.dk/MeMo-1" memoVersion="1.1" memoSchVersion="1.1.0">
+	<memo:MessageHeader>
+		<memo:messageType>DIGITALPOST</memo:messageType>
+		<memo:messageUUID>78212f5c-6d79-4012-8ed1-e2420243bd17</memo:messageUUID>
+		<memo:label>Label Text</memo:label>
+		<memo:mandatory>false</memo:mandatory>
+		<memo:legalNotification>false</memo:legalNotification>
+		<memo:Sender>
+			<memo:senderID>Sender ID</memo:senderID>
+			<memo:idType>CVR</memo:idType>
+			<memo:label>Sender Label</memo:label>
+		</memo:Sender>
+		<memo:Recipient>
+			<memo:recipientID>Recipient ID</memo:recipientID>
+			<memo:idType>CPR</memo:idType>
+		</memo:Recipient>
+	</memo:MessageHeader>
+	<memo:MessageBody>
+		<memo:createdDateTime>2000-01-01T00:00:00Z</memo:createdDateTime>
+		<memo:MainDocument>
+			<memo:File>
+				<memo:encodingFormat>text/plain</memo:encodingFormat>
+				<memo:filename>File1.txt</memo:filename>
+				<memo:language>da</memo:language>
+				<memo:content>RmlsZSBjb250ZW50IDE=</memo:content>
+			</memo:File>
+			<memo:File>
+				<memo:encodingFormat>text/plain</memo:encodingFormat>
+				<memo:filename>File2.txt</memo:filename>
+				<memo:language>da</memo:language>
+				<memo:content>RmlsZSBjb250ZW50IDI=</memo:content>
+			</memo:File>
+		</memo:MainDocument>
+	</memo:MessageBody>
+</memo:Message>
