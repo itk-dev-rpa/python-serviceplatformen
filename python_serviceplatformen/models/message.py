@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from datetime import datetime, date
 from typing import Literal, Optional
 import uuid
+from xml.etree import ElementTree
 
 
 # Typehints
@@ -27,6 +28,9 @@ NAME_SPACES = {
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "sor": "https://services.nsi.dk/en/Services/SOR"
 }
+
+for k, v in NAME_SPACES.items():
+    ElementTree.register_namespace(k, v)
 
 
 @dataclass(kw_only=True)
@@ -409,7 +413,7 @@ class Message:
     MessageBody_: Optional[MessageBody] = None
 
 
-def create_nemsms(message_label: str, message_text: str, sender: Sender, recipient: Recipient, message_uuid: str | None = None) -> Message:
+def create_nemsms(message_label: str, message_text: str, sender: Sender, recipient: Recipient) -> Message:
     """Create a Message object that represents a NemSMS message.
 
     Args:
@@ -417,18 +421,14 @@ def create_nemsms(message_label: str, message_text: str, sender: Sender, recipie
         message_text: The text content of the NemSMS. Max 150 chars.
         sender: A Sender object representing the sender of the message.
         recipient: A Recipient object representing the recipient of the message.
-        message_uuid: The uuid of the message. If None a random id will be generated.
 
     Returns:
         A Message object representing a NemSMS.
     """
-    if not message_uuid:
-        message_uuid = str(uuid.uuid4())
-
     return Message(
         MessageHeader=MessageHeader(
             messageType="NEMSMS",
-            messageUUID=message_uuid,
+            messageUUID=str(uuid.uuid4()),
             label=message_label,
             notification=message_text,
             mandatory=False,
@@ -439,32 +439,22 @@ def create_nemsms(message_label: str, message_text: str, sender: Sender, recipie
     )
 
 
-def create_digital_post_with_attached_files(label: str, sender: Sender, recipient: Recipient, files: tuple[File],
-                                            message_uuid: str | None = None, created_datetime: datetime | None = None) -> Message:
-    """Create a Message object representing Digital Post with one or
-    more file attachments.
+def create_digital_post_with_main_document(label: str, sender: Sender, recipient: Recipient, files: tuple[File]) -> Message:
+    """Create a Message object representing Digital Post with a main document attached.
 
     Args:
         label: The header text of the message.
         sender: A Sender object representing the sender of the message.
         recipient: A Recipient object representing the recipient of the message.
         files: A tuple of File objects to be attached to the message's main document.
-        message_uuid: The uuid of the message. If None a random id will be generated.
-        created_datetime: The creation time of the message. If None the current time will be used.
 
     Returns:
         A Message object.
     """
-    if not message_uuid:
-        message_uuid = str(uuid.uuid4())
-
-    if not created_datetime:
-        created_datetime = datetime.now()
-
     return Message(
         MessageHeader=MessageHeader(
             messageType="DIGITALPOST",
-            messageUUID=message_uuid,
+            messageUUID=str(uuid.uuid4()),
             label=label,
             mandatory=False,
             legalNotification=False,
@@ -472,7 +462,7 @@ def create_digital_post_with_attached_files(label: str, sender: Sender, recipien
             Recipient=recipient,
         ),
         MessageBody_=MessageBody(
-            createdDateTime=created_datetime,
+            createdDateTime=datetime.now(),
             MainDocument=MainDocument(
                 Files=files
             )
