@@ -13,7 +13,7 @@ import requests
 from python_serviceplatformen.authentication import KombitAccess
 from python_serviceplatformen.date_helper import format_datetime
 from python_serviceplatformen.models import xml_util
-from python_serviceplatformen.models.message import Message, MessageBody, MessageHeader, File, Sender, Recipient, MainDocument
+from python_serviceplatformen.models.message import Message
 
 
 def is_registered(cpr: str, service: Literal['digitalpost', 'nemsms'], kombit_access: KombitAccess) -> bool:
