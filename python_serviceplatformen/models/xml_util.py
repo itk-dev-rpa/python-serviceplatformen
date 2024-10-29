@@ -8,7 +8,7 @@ import xmlschema
 from python_serviceplatformen.date_helper import format_date, format_datetime
 
 
-def dataclass_to_xml(obj: object, namespaces: dict[str, str] | None = None) -> ElementTree.Element:
+def dataclass_to_xml(obj: object) -> ElementTree.Element:
     """Recursively convert a dataclass object to an xml tree.
     This only support dataclasses which fields are either
     other dataclasses, lists/tuples, datetimes/dates or
@@ -20,10 +20,6 @@ def dataclass_to_xml(obj: object, namespaces: dict[str, str] | None = None) -> E
     Returns:
         An Element object representing the xml.
     """
-    if namespaces:
-        for k, v in namespaces.items():
-            ElementTree.register_namespace(k, v)
-
     namespace = obj.__namespace__
     attributes = getattr(obj, "__attributes__", {})
     element = ElementTree.Element(f"{{{namespace}}}{obj.__class__.__name__}", attributes)
