@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 from python_serviceplatformen.authentication import KombitAccess
 from python_serviceplatformen import digital_post
 from python_serviceplatformen.models.message import Message, MessageBody, MessageHeader, File, Sender, Recipient, MainDocument
+from python_serviceplatformen.models import message
 from python_serviceplatformen.date_helper import format_datetime
 
 load_dotenv(override=True)
@@ -28,7 +29,7 @@ class DigitalPostTest(unittest.TestCase):
         cls.kombit_access = KombitAccess(cvr=cvr, cert_path=cert_path, test=True)
 
     def test_is_registered(self):
-        """Test authentication."""
+        """Test getting registration status."""
         cpr = os.environ['DIGITAL_POST_TEST_CPR']
 
         result = digital_post.is_registered(cpr=cpr, service="digitalpost", kombit_access=self.kombit_access)
@@ -49,7 +50,7 @@ class DigitalPostTest(unittest.TestCase):
             MessageHeader=MessageHeader(
                 messageType="DIGITALPOST",
                 messageUUID=str(uuid.uuid4()),
-                label="Python Serviceplatformen Test",
+                label="Python Serviceplatformen Test (Send Message)",
                 mandatory="false",
                 legalNotification="false",
                 Sender=Sender(
@@ -60,7 +61,7 @@ class DigitalPostTest(unittest.TestCase):
                 Recipient=Recipient(
                     recipientID=cpr,
                     idType="CPR"
-                ),
+                )
             ),
             MessageBody_=MessageBody(
                 createdDateTime=format_datetime(datetime.now()),
@@ -75,6 +76,32 @@ class DigitalPostTest(unittest.TestCase):
                     ]
                 )
             )
+        )
+
+        digital_post.send_message("Digital Post", m, self.kombit_access)
+
+    def test_send_digital_post_with_main_document(self):
+        cpr = os.environ['DIGITAL_POST_TEST_CPR']
+
+        m = message.create_digital_post_with_main_document(
+            label="Python Serviceplatformen Test (With main document)",
+            sender=Sender(
+                senderID=os.environ["KOMBIT_TEST_CVR"],
+                idType="CVR",
+                label="Python Serviceplatformen"
+            ),
+            recipient=Recipient(
+                recipientID=cpr,
+                idType="CPR"
+            ),
+            files=[
+                File(
+                    encodingFormat="text/plain",
+                    filename="Besked.txt",
+                    language="da",
+                    content=base64.b64encode(b"Hello World").decode()
+                )
+            ]
         )
 
         digital_post.send_message("Digital Post", m, self.kombit_access)
