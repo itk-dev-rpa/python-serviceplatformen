@@ -51,8 +51,8 @@ class DigitalPostTest(unittest.TestCase):
                 messageType="DIGITALPOST",
                 messageUUID=str(uuid.uuid4()),
                 label="Python Serviceplatformen Test (Send Message)",
-                mandatory="false",
-                legalNotification="false",
+                mandatory=False,
+                legalNotification=False,
                 sender=Sender(
                     senderID=os.environ["KOMBIT_TEST_CVR"],
                     idType="CVR",
