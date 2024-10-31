@@ -31,7 +31,7 @@ class MessageXMLTest(unittest.TestCase):
         )
 
         # Set custom uuid for test purposes
-        m.MessageHeader.messageUUID = "fcdcf318-59b6-427c-9879-4f0af833d593"
+        m.messageHeader.messageUUID = "fcdcf318-59b6-427c-9879-4f0af833d593"
 
         message_xml = xml_util.dataclass_to_xml(m)
 
@@ -74,8 +74,8 @@ class MessageXMLTest(unittest.TestCase):
         )
 
         # Set custom properties for test purposes
-        m.MessageHeader.messageUUID = "78212f5c-6d79-4012-8ed1-e2420243bd17"
-        m.MessageBody_.createdDateTime = datetime(2000, 1, 1, 0, 0, 0)
+        m.messageHeader.messageUUID = "78212f5c-6d79-4012-8ed1-e2420243bd17"
+        m.messageBody.createdDateTime = datetime(2000, 1, 1, 0, 0, 0)
 
         message_xml = xml_util.dataclass_to_xml(m)
 
@@ -92,26 +92,26 @@ class MessageXMLTest(unittest.TestCase):
         Stored locally at "tests/message_xml/MeMo_Minimum_Example.xml".
         """
         m = Message(
-            MessageHeader=MessageHeader(
+            messageHeader=MessageHeader(
                 messageType="DIGITALPOST",
                 messageUUID="8C2EA15D-61FB-4BA9-9366-42F8B194C114",
                 label="Pladsanvisning",
                 mandatory=False,
                 legalNotification=False,
-                Sender=Sender(
+                sender=Sender(
                     senderID="12345678",
                     idType="CVR",
                     label="Kommunen"
                 ),
-                Recipient=Recipient(
+                recipient=Recipient(
                     recipientID="2211771212",
                     idType="CPR"
                 )
             ),
-            MessageBody_=MessageBody(
+            messageBody=MessageBody(
                 createdDateTime=datetime(2018, 5, 3, 12, 0, 0),
-                MainDocument=MainDocument(
-                    Files=[
+                mainDocument=MainDocument(
+                    files=[
                         File(
                             encodingFormat="application/pdf",
                             filename="Pladsanvisning.pdf",
@@ -138,7 +138,7 @@ class MessageXMLTest(unittest.TestCase):
         Stored locally at "tests/message_xml/MeMo_Full_Example.xml".
         """
         m = Message(
-            MessageHeader=MessageHeader(
+            messageHeader=MessageHeader(
                 messageType="DIGITALPOST",
                 messageUUID="8C2EA15D-61FB-4BA9-9366-42F8B194C114",
                 messageID="MSG-12345",
@@ -152,52 +152,52 @@ class MessageXMLTest(unittest.TestCase):
                 mandatory=False,
                 legalNotification=False,
                 postType="MYNDIGHEDSPOST",
-                Sender=Sender(
+                sender=Sender(
                     senderID="12345678",
                     idType="CVR",
                     label="Kommunen",
-                    AttentionData_=AttentionData(
-                        AttentionPerson_=AttentionPerson(
+                    attentionData=AttentionData(
+                        attentionPerson=AttentionPerson(
                             personID="9000001234",
                             label="Hans Hansen"
                         ),
-                        ProductionUnit_=ProductionUnit(
+                        productionUnit=ProductionUnit(
                             productionUnitNumber="1234567890",
                             productionUnitName="Produktionsenhed A"
                         ),
-                        GlobalLocationNumber_=GlobalLocationNumber(
+                        globalLocationNumber=GlobalLocationNumber(
                             globalLocationNumber="5798000012345",
                             location="Kommune A"
                         ),
-                        EMail_=EMail(
+                        email=EMail(
                             emailAddress="info@tusindfryd.dk",
                             relatedAgent="Hans Hansen"
                         ),
-                        SEnumber_=SEnumber(
+                        SE_number=SEnumber(
                             seNumber="12345678",
                             companyName="Kommune A"
                         ),
-                        Telephone_=Telephone(
+                        telephone=Telephone(
                             telephoneNumber="12345678",
                             relatedAgent="Hans Hansen"
                         ),
-                        EID_=EID(
+                        eID=EID(
                             eID="CVR:12345678-RID:1234567890123",
                             label="Kommune A"
                         ),
-                        ContentResponsible_=ContentResponsible(
+                        contentResponsible=ContentResponsible(
                             contentResponsibleID="22334455",
                             label="Børnehaven, Tusindfryd"
                         ),
-                        GeneratingSystem_=GeneratingSystem(
+                        generatingSystem=GeneratingSystem(
                             generatingSystemID="Sys-1234",
                             label="KommunaltPostSystem"
                         ),
-                        SORdata_=SORdata(
+                        SOR_data=SORdata(
                             sorIdentifier="468031000016004",
                             entryName="tekst"
                         ),
-                        Address_=Address(
+                        address=Address(
                             id="8c2ea15d-61fb-4ba9-9366-42f8b194c852",
                             addressLabel="Gaden",
                             houseNumber="7A",
@@ -207,18 +207,18 @@ class MessageXMLTest(unittest.TestCase):
                             zipCode="9000",
                             city="Aalborg",
                             country="DK",
-                            AddressPoint=AddressPoint(
+                            addressPoint=AddressPoint(
                                 geographicEastingMeasure="557501.23",
                                 geographicNorthingMeasure="6336248.89",
                                 geographicHeightMeasure="0.0"
                             )
                         )
                     ),
-                    ContactPoint_=ContactPoint(
+                    contactPoint=ContactPoint(
                         contactGroup="22.33.44.55",
                         contactPointID="241d39f6-998e-4929-b198-ccacbbf4b330",
                         label="Kommunen, Pladsanvisningen",
-                        ContactInfo_=(
+                        contactInfo=(
                             ContactInfo(
                                 label="Barnets CPR nummer",
                                 value="2512169996"
@@ -230,56 +230,56 @@ class MessageXMLTest(unittest.TestCase):
                         )
                     ),
                 ),
-                Recipient=Recipient(
+                recipient=Recipient(
                     recipientID="2211771212",
                     idType="CPR",
                     label="Mette Hansen",
-                    AttentionData_=AttentionData(
-                        AttentionPerson_=AttentionPerson(
+                    attentionData=AttentionData(
+                        attentionPerson=AttentionPerson(
                             personID="2211771212",
                             label="Mette Hansen"
                         ),
-                        ProductionUnit_=ProductionUnit(
+                        productionUnit=ProductionUnit(
                             productionUnitNumber="1234567890",
                             productionUnitName="[Produktionsenhed]"
                         ),
-                        GlobalLocationNumber_=GlobalLocationNumber(
+                        globalLocationNumber=GlobalLocationNumber(
                             globalLocationNumber="5798000012345",
                             location="[Navn på lokation]"
                         ),
-                        EMail_=EMail(
+                        email=EMail(
                             emailAddress="m.hansen@gmail.com",
                             relatedAgent="Mette Hansen"
                         ),
-                        SEnumber_=SEnumber(
+                        SE_number=SEnumber(
                             seNumber="12345678",
                             companyName="[Virksomhed]"
                         ),
-                        Telephone_=Telephone(
+                        telephone=Telephone(
                             telephoneNumber="12345678",
                             relatedAgent="Mette Hansen"
                         ),
-                        EID_=EID(
+                        eID=EID(
                             eID="12345678_1234567890",
                             label="[Virksomhed]"
                         ),
-                        ContentResponsible_=ContentResponsible(
+                        contentResponsible=ContentResponsible(
                             contentResponsibleID="22334455",
                             label="[Ansvarlig]"
                         ),
-                        SORdata_=SORdata(
+                        SOR_data=SORdata(
                             sorIdentifier="468031000016004",
                             entryName="[SOR tekst]"
                         ),
-                        UnstructuredAddress_=UnstructuredAddress(
+                        unstructuredAddress=UnstructuredAddress(
                             unstructured="Bakketoppen 6, 9000 Aalborg"
                         )
                     ),
-                    ContactPoint_=ContactPoint(
+                    contactPoint=ContactPoint(
                         contactGroup="22.33.44.55",
                         contactPointID="241d39f6-998e-4929-b198-ccacbbf4b330",
                         label="Kommunen, Pladsanvisningen",
-                        ContactInfo_=(
+                        contactInfo=(
                             ContactInfo(
                                 label="Barnets CPR nummer",
                                 value="2512169996"
@@ -291,47 +291,47 @@ class MessageXMLTest(unittest.TestCase):
                         )
                     )
                 ),
-                ContentData_=ContentData(
-                    CPRdata_=CPRdata(
+                contentData=ContentData(
+                    CPR_data=CPRdata(
                         cprNumber="2512169996",
                         name="Emilie Hansen"
                     ),
-                    CVRdata_=CVRdata(
+                    CVR_data=CVRdata(
                         cvrNumber="12345678",
                         companyName="[Virksomhed]"
                     ),
-                    MotorVehicle_=MotorVehicle(
+                    motorVehicle=MotorVehicle(
                         licenseNumber="AB12345",
                         chassisNumber="WFR18ZZ67W094959"
                     ),
-                    PropertyNumber_=PropertyNumber(
+                    propertyNumber=PropertyNumber(
                         propertyNumber="ABC1234"
                     ),
-                    CaseID_=CaseID(
+                    caseID=CaseID(
                         caseID="SAG-12345",
                         caseSystem="Sagssystem 1234"
                     ),
-                    KLEdata_=KLEdata(
+                    KLE_data=KLEdata(
                         subjectKey="00.00.00",
                         version="Maj 2018",
                         activityFacet="[Tekst]",
                         label="[KLE tekst]"
                     ),
-                    FORMdata_=FORMdata(
+                    FORM_data=FORMdata(
                         taskKey="00.00.00.00",
                         version="Opgavenøglen v2.12",
                         activityFacet="Tekst]",
                         label="[FORM tekst]"
                     ),
-                    ProductionUnit_=ProductionUnit(
+                    productionUnit=ProductionUnit(
                         productionUnitNumber="1234567890",
                         productionUnitName="[Produktionsenhed]"
                     ),
-                    Education_=Education(
+                    education=Education(
                         educationCode="123ABC",
                         educationName="[Uddannelse navn]"
                     ),
-                    AdditionalContentData_=(
+                    additionalContentData=(
                         AdditionalContentData(
                             contentDataType="Liste A",
                             contentDataName="Navn 1",
@@ -344,7 +344,7 @@ class MessageXMLTest(unittest.TestCase):
                         )
                     )
                 ),
-                ForwardData_=ForwardData(
+                forwardData=ForwardData(
                     messageUUID="8C2EA15D-61FB-4BA9-9366-42F8B194C114",
                     originalMessageDateTime=datetime(2021, 3, 15, 12, 0, 0),
                     originalSender="Kommunen",
@@ -352,7 +352,7 @@ class MessageXMLTest(unittest.TestCase):
                     contactPointID="241d39f6-998e-4929-b198-ccacbbf4b330",
                     comment="kommentar til modtageren"
                 ),
-                ReplyData_=(
+                replyData=(
                     ReplyData(
                         messageID="MSG-12344",
                         messageUUID="8C2EA15D-61FB-4BA9-9366-42F8B194C114",
@@ -362,7 +362,7 @@ class MessageXMLTest(unittest.TestCase):
                         contactPointID="241d39f6-998e-4929-b198-ccacbbf4b330",
                         generatingSystemID="ABC-123",
                         comment="Tilbud om børnehaveplads til Emilie Hansen",
-                        AdditionalReplyData_=(
+                        additionalReplyData=(
                             AdditionalReplyData(
                                 label="Intern note",
                                 value="tekst"
@@ -383,7 +383,7 @@ class MessageXMLTest(unittest.TestCase):
                         contactPointID="241d39f6-998e-4929-b198-ccacbbf4b330",
                         generatingSystemID="ABC-1234",
                         comment="tekst",
-                        AdditionalReplyData_=(
+                        additionalReplyData=(
                             AdditionalReplyData(
                                 label="Intern note",
                                 value="tekst"
@@ -404,12 +404,12 @@ class MessageXMLTest(unittest.TestCase):
                     )
                 )
             ),
-            MessageBody_=MessageBody(
+            messageBody=MessageBody(
                 createdDateTime=datetime(2018, 5, 3, 12, 0, 0),
-                MainDocument=MainDocument(
+                mainDocument=MainDocument(
                     mainDocumentID="456",
                     label="Tilbud om børnehaveplads",
-                    Files=(
+                    files=(
                         File(
                             encodingFormat="application/pdf",
                             filename="Pladsanvisning.pdf",
@@ -423,13 +423,13 @@ class MessageXMLTest(unittest.TestCase):
                             content="VGhpcyBpcyBhIHRlc3Q="
                         )
                     ),
-                    Actions=(
+                    actions=(
                         Action(
                             label="Spørgeskema",
                             actionCode="SELVBETJENING",
                             startDateTime=datetime(2018, 11, 9, 12, 0, 0),
                             endDateTime=datetime(2018, 12, 9, 12, 0, 0),
-                            EntryPoint_=EntryPoint(
+                            entryPoint=EntryPoint(
                                 url="http://www.tusindfryd.dk/spørgeskema.html"
                             )
                         ),
@@ -438,7 +438,7 @@ class MessageXMLTest(unittest.TestCase):
                             actionCode="AFTALE",
                             startDateTime=datetime(2018, 11, 10, 9, 0, 0),
                             endDateTime=datetime(2018, 11, 9, 12, 0, 0),
-                            Reservation_=Reservation(
+                            reservation=Reservation(
                                 description="Opstart Tusindfryd",
                                 reservationUUID="8C2EA15D-61FB-4BA9-9366-42F8B194D241",
                                 abstract="Opstart",
@@ -451,11 +451,11 @@ class MessageXMLTest(unittest.TestCase):
                         )
                     )
                 ),
-                AdditionalDocuments=(
+                additionalDocuments=(
                     AdditionalDocument(
                         additionalDocumentID="789",
                         label="Tilbud om børnehaveplads",
-                        Files=(
+                        files=(
                             File(
                                 encodingFormat="application/pdf",
                                 filename="Pladsanvisning.pdf",
@@ -469,20 +469,20 @@ class MessageXMLTest(unittest.TestCase):
                                 content="VGhpcyBpcyBhIHRlc3Q="
                             )
                         ),
-                        Actions=(
+                        actions=(
                             Action(
                                 label="Tusindfryd hjemmeside",
                                 actionCode="INFORMATION",
                                 startDateTime=datetime(2018, 11, 10, 9, 0, 0),
                                 endDateTime=datetime(2018, 11, 9, 12, 0, 0),
-                                EntryPoint_=EntryPoint(
+                                entryPoint=EntryPoint(
                                     url="http://www.tusindfryd.dk"
                                 )
                             ),
                             Action(
                                 label="Opret aftale i kalender",
                                 actionCode="AFTALE",
-                                Reservation_=Reservation(
+                                reservation=Reservation(
                                     description="Introduktion til nye forældre",
                                     reservationUUID="8C2EA15D-61FB-4BA9-9366-42F8B194E845",
                                     abstract="Invitation",
@@ -498,7 +498,7 @@ class MessageXMLTest(unittest.TestCase):
                     AdditionalDocument(
                         additionalDocumentID="678",
                         label="Tilbud om børnehaveplads, vejledning",
-                        Files=(
+                        files=(
                             File(
                                 encodingFormat="application/pdf",
                                 filename="vejledning.pdf",
@@ -506,24 +506,24 @@ class MessageXMLTest(unittest.TestCase):
                                 content="VGhpcyBpcyBhIHRlc3Q="
                             )
                         ),
-                        Actions=(
+                        actions=(
                             Action(
                                 label="Register opslag",
                                 actionCode="SELVBETJENING",
                                 startDateTime=datetime(2018, 11, 10, 9, 0, 0),
                                 endDateTime=datetime(2018, 11, 9, 12, 0, 0),
-                                EntryPoint_=EntryPoint(
+                                entryPoint=EntryPoint(
                                     url="http://registration.nemhandel.dk/NemHandelRegisterWeb/public/participant/info?key=5798009811578&keytype=GLN"
                                 )
                             )
                         )
                     )
                 ),
-                TechnicalDocuments=(
+                technicalDocuments=(
                     TechnicalDocument(
                         technicalDocumentID="222555",
                         label="Teknisk dokument",
-                        Files=(
+                        files=(
                             File(
                                 encodingFormat="text/xml",
                                 filename="TekniskDokument.xml",

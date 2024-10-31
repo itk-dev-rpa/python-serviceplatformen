@@ -132,7 +132,7 @@ class Address:
     zipCode: str
     city: str
     country: str
-    AddressPoint: AddressPoint
+    addressPoint: AddressPoint
 
 
 @dataclass(kw_only=True)
@@ -154,7 +154,7 @@ class ContactPoint:
     contactGroup: Optional[str]
     contactPointID: str
     label: str
-    ContactInfo_: Optional[tuple[ContactInfo, ...]] = None
+    contactInfo: Optional[tuple[ContactInfo, ...]] = None
 
 
 @dataclass(kw_only=True)
@@ -254,7 +254,7 @@ class ReplyData:
     contactPointID: Optional[str] = None
     generatingSystemID: Optional[str] = None
     comment: Optional[str] = None
-    AdditionalReplyData_: Optional[tuple[AdditionalReplyData, ...]] = None
+    additionalReplyData: Optional[tuple[AdditionalReplyData, ...]] = None
 
 
 @dataclass(kw_only=True)
@@ -283,8 +283,8 @@ class Action:
     actionCode: Literal["AFTALE", "BETALING", "SELVBETJENING", "INFORMATION", "UNDERSKRIV", "BEKRAEFT", "FORBEREDELSE", "TILMELDING"]
     startDateTime: Optional[datetime] = None
     endDateTime: Optional[datetime] = None
-    Reservation_: Optional[Reservation] = None
-    EntryPoint_: Optional[EntryPoint] = None
+    reservation: Optional[Reservation] = None
+    entryPoint: Optional[EntryPoint] = None
 
 
 @dataclass(kw_only=True)
@@ -292,8 +292,8 @@ class MainDocument:
     __namespace__ = NAME_SPACES["memo"]
     mainDocumentID: Optional[str] = None
     label: Optional[str] = None
-    Files: tuple[File, ...]
-    Actions: Optional[tuple[Action, ...]] = None
+    files: tuple[File, ...]
+    actions: Optional[tuple[Action, ...]] = None
 
 
 @dataclass(kw_only=True)
@@ -301,8 +301,8 @@ class AdditionalDocument:
     __namespace__ = NAME_SPACES["memo"]
     additionalDocumentID: Optional[str] = None
     label: Optional[str] = None
-    Files: tuple[File, ...]
-    Actions: Optional[tuple[Action, ...]] = None
+    files: tuple[File, ...]
+    actions: Optional[tuple[Action, ...]] = None
 
 
 @dataclass(kw_only=True)
@@ -310,33 +310,33 @@ class TechnicalDocument:
     __namespace__ = NAME_SPACES["memo"]
     technicalDocumentID: Optional[str] = None
     label: Optional[str] = None
-    Files: tuple[File, ...]
+    files: tuple[File, ...]
 
 
 @dataclass(kw_only=True)
 class MessageBody:
     __namespace__ = NAME_SPACES["memo"]
     createdDateTime: datetime
-    MainDocument: MainDocument
-    AdditionalDocuments: Optional[tuple[AdditionalDocument, ...]] = None
-    TechnicalDocuments: Optional[tuple[TechnicalDocument, ...]] = None
+    mainDocument: MainDocument
+    additionalDocuments: Optional[tuple[AdditionalDocument, ...]] = None
+    technicalDocuments: Optional[tuple[TechnicalDocument, ...]] = None
 
 
 @dataclass(kw_only=True)
 class AttentionData:
     __namespace__ = NAME_SPACES["memo"]
-    AttentionPerson_: Optional[AttentionPerson] = None
-    ProductionUnit_: Optional[ProductionUnit] = None
-    GlobalLocationNumber_: Optional[GlobalLocationNumber] = None
-    EMail_: Optional[EMail] = None
-    SEnumber_: Optional[SEnumber] = None
-    Telephone_: Optional[Telephone] = None
-    EID_: Optional[EID] = None
-    ContentResponsible_: Optional[ContentResponsible] = None
-    GeneratingSystem_: Optional[GeneratingSystem] = None
-    SORdata_: Optional[SORdata] = None
-    Address_: Optional[Address] = None
-    UnstructuredAddress_: Optional[UnstructuredAddress] = None
+    attentionPerson: Optional[AttentionPerson] = None
+    productionUnit: Optional[ProductionUnit] = None
+    globalLocationNumber: Optional[GlobalLocationNumber] = None
+    email: Optional[EMail] = None
+    SE_number: Optional[SEnumber] = None
+    telephone: Optional[Telephone] = None
+    eID: Optional[EID] = None
+    contentResponsible: Optional[ContentResponsible] = None
+    generatingSystem: Optional[GeneratingSystem] = None
+    SOR_data: Optional[SORdata] = None
+    address: Optional[Address] = None
+    unstructuredAddress: Optional[UnstructuredAddress] = None
 
 
 @dataclass(kw_only=True)
@@ -346,8 +346,8 @@ class Sender:
     idType: Literal["MyndighedsID", "CPR", "CVR", "Andet"]
     label: str
     idTypeLabel: Optional[str] = None
-    AttentionData_: Optional[AttentionData] = None
-    ContactPoint_: Optional[ContactPoint] = None
+    attentionData: Optional[AttentionData] = None
+    contactPoint: Optional[ContactPoint] = None
 
 
 @dataclass(kw_only=True)
@@ -357,25 +357,25 @@ class Recipient:
     idType: Literal["MyndighedsID", "CPR", "CVR", "Andet"]
     idTypeLabel: Optional[str] = None
     label: Optional[str] = None
-    AttentionData_: Optional[AttentionData] = None
-    ContactPoint_: Optional[ContactPoint] = None
+    attentionData: Optional[AttentionData] = None
+    contactPoint: Optional[ContactPoint] = None
 
 
 @dataclass(kw_only=True)
 class ContentData:
     __namespace__ = NAME_SPACES["memo"]
-    CPRdata_: Optional[CPRdata] = None
-    CVRdata_: Optional[CVRdata] = None
-    MotorVehicle_: Optional[MotorVehicle] = None
-    PropertyNumber_: Optional[PropertyNumber] = None
-    CaseID_: Optional[CaseID] = None
-    KLEdata_: Optional[KLEdata] = None
-    FORMdata_: Optional[FORMdata] = None
-    ProductionUnit_: Optional[ProductionUnit] = None
-    Education_: Optional[Education] = None
-    Address_: Optional[Address] = None
-    UnstructuredAddress_: Optional[UnstructuredAddress] = None
-    AdditionalContentData_: Optional[tuple[AdditionalContentData, ...]] = None
+    CPR_data: Optional[CPRdata] = None
+    CVR_data: Optional[CVRdata] = None
+    motorVehicle: Optional[MotorVehicle] = None
+    propertyNumber: Optional[PropertyNumber] = None
+    caseID: Optional[CaseID] = None
+    KLE_data: Optional[KLEdata] = None
+    FORM_data: Optional[FORMdata] = None
+    productionUnit: Optional[ProductionUnit] = None
+    education: Optional[Education] = None
+    address: Optional[Address] = None
+    unstructuredAddress: Optional[UnstructuredAddress] = None
+    additionalContentData: Optional[tuple[AdditionalContentData, ...]] = None
 
 
 @dataclass(kw_only=True)
@@ -394,11 +394,11 @@ class MessageHeader:
     mandatory: bool
     legalNotification: bool
     postType: Optional[str] = None
-    Sender: Sender
-    Recipient: Recipient
-    ContentData_: Optional[ContentData] = None
-    ForwardData_: Optional[ForwardData] = None
-    ReplyData_: Optional[tuple[ReplyData, ...]] = None
+    sender: Sender
+    recipient: Recipient
+    contentData: Optional[ContentData] = None
+    forwardData: Optional[ForwardData] = None
+    replyData: Optional[tuple[ReplyData, ...]] = None
 
 
 @dataclass(kw_only=True)
@@ -409,8 +409,8 @@ class Message:
         "memoSchVersion": "1.1.0",
 
     }
-    MessageHeader: MessageHeader
-    MessageBody_: Optional[MessageBody] = None
+    messageHeader: MessageHeader
+    messageBody: Optional[MessageBody] = None
 
 
 def create_nemsms(message_label: str, message_text: str, sender: Sender, recipient: Recipient) -> Message:
@@ -426,15 +426,15 @@ def create_nemsms(message_label: str, message_text: str, sender: Sender, recipie
         A Message object representing a NemSMS.
     """
     return Message(
-        MessageHeader=MessageHeader(
+        messageHeader=MessageHeader(
             messageType="NEMSMS",
             messageUUID=str(uuid.uuid4()),
             label=message_label,
             notification=message_text,
             mandatory=False,
             legalNotification=False,
-            Sender=sender,
-            Recipient=recipient
+            sender=sender,
+            recipient=recipient
         )
     )
 
@@ -452,19 +452,19 @@ def create_digital_post_with_main_document(label: str, sender: Sender, recipient
         A Message object.
     """
     return Message(
-        MessageHeader=MessageHeader(
+        messageHeader=MessageHeader(
             messageType="DIGITALPOST",
             messageUUID=str(uuid.uuid4()),
             label=label,
             mandatory=False,
             legalNotification=False,
-            Sender=sender,
-            Recipient=recipient,
+            sender=sender,
+            recipient=recipient,
         ),
-        MessageBody_=MessageBody(
+        messageBody=MessageBody(
             createdDateTime=datetime.now(),
-            MainDocument=MainDocument(
-                Files=files
+            mainDocument=MainDocument(
+                files=files
             )
         )
     )

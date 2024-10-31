@@ -47,26 +47,26 @@ class DigitalPostTest(unittest.TestCase):
         cpr = os.environ['DIGITAL_POST_TEST_CPR']
 
         m = Message(
-            MessageHeader=MessageHeader(
+            messageHeader=MessageHeader(
                 messageType="DIGITALPOST",
                 messageUUID=str(uuid.uuid4()),
                 label="Python Serviceplatformen Test (Send Message)",
                 mandatory="false",
                 legalNotification="false",
-                Sender=Sender(
+                sender=Sender(
                     senderID=os.environ["KOMBIT_TEST_CVR"],
                     idType="CVR",
                     label="Python Serviceplatformen"
                 ),
-                Recipient=Recipient(
+                recipient=Recipient(
                     recipientID=cpr,
                     idType="CPR"
                 )
             ),
-            MessageBody_=MessageBody(
+            messageBody=MessageBody(
                 createdDateTime=format_datetime(datetime.now()),
-                MainDocument=MainDocument(
-                    Files=[
+                mainDocument=MainDocument(
+                    files=[
                         File(
                             encodingFormat="text/plain",
                             filename="Besked.txt",
