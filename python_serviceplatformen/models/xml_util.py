@@ -1,3 +1,5 @@
+"""This module contains helper functions to work with xml."""
+
 from datetime import datetime, date
 from dataclasses import is_dataclass, fields
 import os
@@ -77,8 +79,8 @@ def validate_memo(element: ElementTree.Element) -> None:
     """
     xml_string = ElementTree.tostring(element, encoding="utf8").decode()
 
-    dir = os.path.dirname(os.path.realpath(__file__))
-    path = os.path.join(dir, "Memo_SChema", "MeMo_core.xsd")
+    dir_ = os.path.dirname(os.path.realpath(__file__))
+    path = os.path.join(dir_, "Memo_SChema", "MeMo_core.xsd")
 
     schema = xmlschema.XMLSchema11(path)
     schema.validate(xml_string)

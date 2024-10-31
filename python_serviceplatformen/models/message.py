@@ -10,6 +10,12 @@ import uuid
 from xml.etree import ElementTree
 
 
+# Naming follows the names of the official MeMo format
+# Class descriptions are in the official MeMo docs
+# We can't change the number of class attributes
+# pylint: disable=invalid-name, missing-class-docstring, too-many-instance-attributes
+
+
 # Typehints
 Base64String = str
 MimeTypeString = str
