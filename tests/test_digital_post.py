@@ -44,6 +44,7 @@ class DigitalPostTest(unittest.TestCase):
         self.assertFalse(result)
 
     def test_send_message(self):
+        """Test sending a simple message."""
         cpr = os.environ['DIGITAL_POST_TEST_CPR']
 
         m = Message(
@@ -81,6 +82,7 @@ class DigitalPostTest(unittest.TestCase):
         digital_post.send_message("Digital Post", m, self.kombit_access)
 
     def test_send_digital_post_with_main_document(self):
+        """Test the helper function for creating a message with a main document."""
         cpr = os.environ['DIGITAL_POST_TEST_CPR']
 
         m = message.create_digital_post_with_main_document(

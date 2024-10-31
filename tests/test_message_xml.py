@@ -1,3 +1,5 @@
+"""This module contains tests for xml functionality."""
+
 import unittest
 from datetime import date, datetime
 import base64
