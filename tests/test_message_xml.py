@@ -4,7 +4,13 @@ import base64
 from xml.etree import ElementTree
 
 from python_serviceplatformen.models import message, xml_util
-from python_serviceplatformen.models.message import EID, Action, AdditionalContentData, AdditionalDocument, AdditionalReplyData, Address, AddressPoint, AttentionData, AttentionPerson, CPRdata, CVRdata, CaseID, ContactInfo, ContactPoint, ContentData, ContentResponsible, EMail, Education, EntryPoint, FORMdata, ForwardData, GeneratingSystem, GlobalLocationNumber, KLEdata, MainDocument, MessageBody, MessageHeader, MotorVehicle, ProductionUnit, PropertyNumber, ReplyData, Reservation, SEnumber, SORdata, Sender, Recipient, File, Message, TechnicalDocument, Telephone, UnstructuredAddress
+from python_serviceplatformen.models.message import (
+    EID, Action, AdditionalContentData, AdditionalDocument, AdditionalReplyData, Address, AddressPoint,
+    AttentionData, AttentionPerson, CPRdata, CVRdata, CaseID, ContactInfo, ContactPoint, ContentData,
+    ContentResponsible, EMail, Education, EntryPoint, FORMdata, ForwardData, GeneratingSystem, GlobalLocationNumber,
+    KLEdata, MainDocument, MessageBody, MessageHeader, MotorVehicle, ProductionUnit, PropertyNumber, ReplyData,
+    Reservation, SEnumber, SORdata, Sender, Recipient, File, Message, TechnicalDocument, Telephone, UnstructuredAddress
+)
 
 # We don't care about duplicate code in tests
 # pylint: disable=R0801
