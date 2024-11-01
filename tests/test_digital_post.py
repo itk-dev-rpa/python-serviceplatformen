@@ -11,7 +11,6 @@ from python_serviceplatformen.authentication import KombitAccess
 from python_serviceplatformen import digital_post
 from python_serviceplatformen.models.message import Message, MessageBody, MessageHeader, File, Sender, Recipient, MainDocument
 from python_serviceplatformen.models import message
-from python_serviceplatformen.date_helper import format_datetime
 
 load_dotenv(override=True)
 
@@ -65,7 +64,7 @@ class DigitalPostTest(unittest.TestCase):
                 )
             ),
             messageBody=MessageBody(
-                createdDateTime=format_datetime(datetime.now()),
+                createdDateTime=datetime.now(),
                 mainDocument=MainDocument(
                     files=[
                         File(
