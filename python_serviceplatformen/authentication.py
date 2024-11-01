@@ -61,7 +61,7 @@ class KombitAccess:
             self._access_tokens[entity_id] = access_token
             return access_token[0]
         except HTTPError as exc:
-            raise ValueError(f"Couldn't obtain access token for {entity_id}") from exc
+            raise ValueError(f"Couldn't obtain access token for {entity_id}: {exc.response.text}") from exc
 
 
 def _get_saml_token(cvr: str, cert_path: str, entity_id: str, test: bool) -> str:
