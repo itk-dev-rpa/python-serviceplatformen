@@ -2,8 +2,8 @@
 
 from datetime import datetime, date
 from dataclasses import is_dataclass, fields
-import os
 from xml.etree import ElementTree
+import importlib.resources
 
 import xmlschema
 
@@ -79,8 +79,7 @@ def validate_memo(element: ElementTree.Element) -> None:
     """
     xml_string = ElementTree.tostring(element, encoding="utf8").decode()
 
-    dir_ = os.path.dirname(os.path.realpath(__file__))
-    path = os.path.join(dir_, "Memo_SChema", "MeMo_core.xsd")
+    path = importlib.resources.files("python_serviceplatformen.models.memo_schema").joinpath("MeMo_core.xsd")
 
     schema = xmlschema.XMLSchema11(path)
     schema.validate(xml_string)
