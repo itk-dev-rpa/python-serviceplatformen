@@ -27,8 +27,10 @@ class and it will handle the rest for you.
 
 ```python
 from python_serviceplatformen.authentication import KombitAccess
-kombit_access = KombitAccess(cvr="12345678", cert_path="C:\something\Certificate.pem")
+kombit_access = KombitAccess(cvr="12345678", cert_path="C:\something\Certificate.pem", test=False)
 ```
+
+If you want to use the test system instead pass `test=True` to KombitAccess.
 
 ## Digital Post
 
@@ -64,19 +66,23 @@ A detailed description of the model and all attributes can be found in the offic
 To send a message construct a message object and then send it off to the send_message function:
 
 ```python
+import uuid
+from datetime import datetime
+import base64
+
 from python_serviceplatformen.authentication import KombitAccess
 from python_serviceplatformen import digital_post
 from python_serviceplatformen.models.message import (
     Message, MessageHeader, Sender, Recipient, MessageBody, MainDocument, File
 )
 
-kombit_access = KombitAccess(cvr="12345678", cert_path="C:\something\Certificate.pem")
+kombit_access = KombitAccess(cvr="55133018", cert_path=r"C:\Users\az68933\Desktop\SF1601\Certificate.pem")
 
 m = Message(
     messageHeader=MessageHeader(
         messageType="DIGITALPOST",
         messageUUID=str(uuid.uuid4()),
-        label="Python Serviceplatformen Test (Send Message)",
+        label="Digital Post test message",
         mandatory=False,
         legalNotification=False,
         sender=Sender(
@@ -90,7 +96,7 @@ m = Message(
         )
     ),
     messageBody=MessageBody(
-        createdDateTime=format_datetime(datetime.now()),
+        createdDateTime=datetime.now(),
         mainDocument=MainDocument(
             files=[
                 File(
