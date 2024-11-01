@@ -1,4 +1,4 @@
-"""This moduel contains helper functions to use the SF1601 Kombit API.
+"""This module contains helper functions to use the SF1601 Kombit API.
 https://digitaliseringskataloget.dk/integration/sf1601
 """
 
