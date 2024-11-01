@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Complete data class model of MeMo objects.
+- Tools to verify and convert MeMo objects to xml.
+- Function for sending a MeMo message.
+- Helper functions to create simple MeMo messages.
+
 ## [1.0.0] - 19-09-2024
 
 ### Added

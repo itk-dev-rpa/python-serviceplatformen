@@ -10,14 +10,15 @@ authors = [
 ]
 description = "Python modules for easier use of Kombit's serviceplatformen."
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.10, <3.13"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
 ]
 dependencies = [
   "requests == 2.*",
-  "cryptography"
+  "cryptography",
+  "xmlschema"
 ]
 
 [project.urls]
@@ -30,3 +31,6 @@ dev = [
   "flake8",
   "pylint"
 ]
+
+[tool.setuptools.package-data]
+"*" = ["*.xsd"]

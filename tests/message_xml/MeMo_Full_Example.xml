@@ -1,0 +1,420 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--********************************************************************************************************* 
+https://digitaliser.dk/Media/638142936375938205/MeMo_Full_Example.xml
+MeMo XML example, Full This example illustrates a MeMo example with all possible elements 
+The example data is not correct business content 
+
+Date: 20181119 Charlotte Dahl Skovhus 
+
+Modifications 
+20181220: CDS: Changed from RDF/XML to XML 
+20190104: CDS: Changes to namespaces 
+20190114: CDS: Changes to namespaces 
+20190116: CDS: Changes to namespaces
+20191014: CDS: Changes acc to updated model
+20191114: CDS: Changes acc to updated model
+20191210: CDS: Added AdditionalContentData
+20200204: CDS: Changes acc to updated model (v0.9)
+20200312: CDS: DataTime format updated
+20200630: CDS: Changes acc to updated model (v1.0)
+20200901: CDS: Added ContactPoint for Sender
+20200901: CDS: Added ContactPoint for Sender and DocumentId names changed
+20210204: CDS: Added postType element
+20210317: CDS: Added originalMessageDateTime element
+***********************************************************************************************************-->
+<memo:Message xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:memo="https://DigitalPost.dk/MeMo-1" memoVersion="1.1" memoSchVersion="1.1.0" xmlns:gln="https://www.gs1.dk/gs1-standarder/identifikation/gln-global-location-number/" xmlns:udd="https://www.dst.dk/da/TilSalg/Forskningsservice/Dokumentation/hoejkvalitetsvariable/elevregister-2/udd#" xmlns:pnum="https://indberet.virk.dk/myndigheder/stat/ERST/P-enhedsloesningen" xmlns:form="http://www.form-online.dk/" xmlns:kle="http://kle-online.dk/" xmlns:dmv="https://motorregister.skat.dk/" xmlns:grd="https://data.gov.dk/model/core/" xmlns:sor="https://services.nsi.dk/en/Services/SOR" xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+	<memo:MessageHeader>
+		<memo:messageType>DIGITALPOST</memo:messageType>
+		<memo:messageUUID>8C2EA15D-61FB-4BA9-9366-42F8B194C114</memo:messageUUID>
+		<memo:messageID>MSG-12345</memo:messageID>
+		<memo:messageCode>Pladsanvisning</memo:messageCode>
+		<memo:label>Besked fra Børneforvaltningen</memo:label>
+		<memo:notification>Du har fået digitalpost fra Kommunen vedr. din ansøgning om børnehaveplads.</memo:notification>
+		<memo:additionalNotification>Du har fået digitalpost fra Kommunen vedr. din ansøgning om børnehaveplads til Emilie Hansen</memo:additionalNotification>
+		<memo:reply>true</memo:reply>
+		<memo:replyByDateTime>2018-09-30T12:00:00Z</memo:replyByDateTime>
+		<memo:doNotDeliverUntilDate>2018-09-15</memo:doNotDeliverUntilDate>
+		<memo:mandatory>false</memo:mandatory>
+		<memo:legalNotification>false</memo:legalNotification>
+		<memo:postType>MYNDIGHEDSPOST</memo:postType>
+		<memo:Sender>
+			<memo:senderID>12345678</memo:senderID>
+			<memo:idType>CVR</memo:idType>
+			<memo:label>Kommunen</memo:label>
+			<memo:AttentionData>
+				<memo:AttentionPerson>
+					<memo:personID>9000001234</memo:personID>
+					<memo:label>Hans Hansen</memo:label>
+				</memo:AttentionPerson>
+				<grd:ProductionUnit>
+					<grd:productionUnitNumber>1234567890</grd:productionUnitNumber>
+					<grd:productionUnitName>Produktionsenhed A</grd:productionUnitName>
+				</grd:ProductionUnit>
+				<gln:GlobalLocationNumber>
+					<gln:globalLocationNumber>5798000012345</gln:globalLocationNumber>
+					<gln:location>Kommune A</gln:location>
+				</gln:GlobalLocationNumber>
+				<memo:EMail>
+					<memo:emailAddress>info@tusindfryd.dk</memo:emailAddress>
+					<memo:relatedAgent>Hans Hansen</memo:relatedAgent>
+				</memo:EMail>
+				<grd:SEnumber>
+					<grd:seNumber>12345678</grd:seNumber>
+					<grd:companyName>Kommune A</grd:companyName>
+				</grd:SEnumber>
+				<memo:Telephone>
+					<memo:telephoneNumber>12345678</memo:telephoneNumber>
+					<memo:relatedAgent>Hans Hansen</memo:relatedAgent>
+				</memo:Telephone>
+				<grd:EID>
+					<grd:eID>CVR:12345678-RID:1234567890123</grd:eID>
+					<grd:label>Kommune A</grd:label>
+				</grd:EID>
+				<memo:ContentResponsible>
+					<memo:contentResponsibleID>22334455</memo:contentResponsibleID>
+					<memo:label>Børnehaven, Tusindfryd</memo:label>
+				</memo:ContentResponsible>
+				<memo:GeneratingSystem>
+					<memo:generatingSystemID>Sys-1234</memo:generatingSystemID>
+					<memo:label>KommunaltPostSystem</memo:label>
+				</memo:GeneratingSystem>
+				<sor:SORdata>
+					<sor:sorIdentifier>468031000016004</sor:sorIdentifier>
+					<sor:entryName>tekst</sor:entryName>
+				</sor:SORdata>
+				<grd:Address>
+					<grd:id>8c2ea15d-61fb-4ba9-9366-42f8b194c852</grd:id>
+					<grd:addressLabel>Gaden</grd:addressLabel>
+					<grd:houseNumber>7A</grd:houseNumber>
+					<grd:door>th</grd:door>
+					<grd:floor>3</grd:floor>
+					<grd:co>C/O</grd:co>
+					<grd:zipCode>9000</grd:zipCode>
+					<grd:city>Aalborg</grd:city>
+					<grd:country>DK</grd:country>
+					<grd:AddressPoint>
+						<grd:geographicEastingMeasure>557501.23</grd:geographicEastingMeasure>
+						<grd:geographicNorthingMeasure>6336248.89</grd:geographicNorthingMeasure>
+						<grd:geographicHeightMeasure>0.0</grd:geographicHeightMeasure>
+					</grd:AddressPoint>
+				</grd:Address>
+				<!--Alternative Address. Unstructured address can only be used alone-->
+				<!--<grd:UnstructuredAddress>
+					<grd:unstructured>[Ustruktureret adresseangivlese]</grd:unstructured>
+				</grd:UnstructuredAddress>-->
+			</memo:AttentionData>
+			<memo:ContactPoint>
+				<memo:contactGroup>22.33.44.55</memo:contactGroup>
+				<memo:contactPointID>241d39f6-998e-4929-b198-ccacbbf4b330</memo:contactPointID>
+				<memo:label>Kommunen, Pladsanvisningen</memo:label>
+				<memo:ContactInfo>
+					<memo:label>Barnets CPR nummer</memo:label>
+					<memo:value>2512169996</memo:value>
+				</memo:ContactInfo>
+				<memo:ContactInfo>
+					<memo:label>Barnets navn</memo:label>
+					<memo:value>Emilie Hansen</memo:value>
+				</memo:ContactInfo>
+			</memo:ContactPoint>
+		</memo:Sender>
+		<memo:Recipient>
+			<memo:recipientID>2211771212</memo:recipientID>
+			<memo:idType>CPR</memo:idType>
+			<!--<memo:idTypeLabel>eID</memo:idTypeLabel>-->
+			<memo:label>Mette Hansen</memo:label>
+			<memo:AttentionData>
+				<memo:AttentionPerson>
+					<memo:personID>2211771212</memo:personID>
+					<memo:label>Mette Hansen</memo:label>
+				</memo:AttentionPerson>
+				<grd:ProductionUnit>
+					<grd:productionUnitNumber>1234567890</grd:productionUnitNumber>
+					<grd:productionUnitName>[Produktionsenhed]</grd:productionUnitName>
+				</grd:ProductionUnit>
+				<gln:GlobalLocationNumber>
+					<gln:globalLocationNumber>5798000012345</gln:globalLocationNumber>
+					<gln:location>[Navn på lokation]</gln:location>
+				</gln:GlobalLocationNumber>
+				<memo:EMail>
+					<memo:emailAddress>m.hansen@gmail.com</memo:emailAddress>
+					<memo:relatedAgent>Mette Hansen</memo:relatedAgent>
+				</memo:EMail>
+				<grd:SEnumber>
+					<grd:seNumber>12345678</grd:seNumber>
+					<grd:companyName>[Virksomhed]</grd:companyName>
+				</grd:SEnumber>
+				<memo:Telephone>
+					<memo:telephoneNumber>12345678</memo:telephoneNumber>
+					<memo:relatedAgent>Mette Hansen</memo:relatedAgent>
+				</memo:Telephone>
+				<grd:EID>
+					<grd:eID>12345678_1234567890</grd:eID>
+					<grd:label>[Virksomhed]</grd:label>
+				</grd:EID>
+				<memo:ContentResponsible>
+					<memo:contentResponsibleID>22334455</memo:contentResponsibleID>
+					<memo:label>[Ansvarlig]</memo:label>
+				</memo:ContentResponsible>
+				<sor:SORdata>
+					<sor:sorIdentifier>468031000016004</sor:sorIdentifier>
+					<sor:entryName>[SOR tekst]</sor:entryName>
+				</sor:SORdata>
+				<!--
+				<grd:Address>
+					<grd:id>8c2ea15d-61fb-4ba9-9366-42f8b194c852</grd:id>
+					<grd:addressLabel>Gaden</grd:addressLabel>
+					<grd:houseNumber>7A</grd:houseNumber>
+					<grd:door>th</grd:door>
+					<grd:floor>3</grd:floor>
+					<grd:co>C/O</grd:co>
+					<grd:zipCode>9000</grd:zipCode>
+					<grd:city>Aalborg</grd:city>
+					<grd:country>DK</grd:country>
+					<grd:AddressPoint>
+						<grd:GeographicPointLocation crsIdentifier="EPSG:25832">
+							<grd:GeographicCoordinateTuple>
+								<grd:geographicEastingMeasure>557501.23</grd:geographicEastingMeasure>
+								<grd:geographicNorthingMeasure>6336248.89</grd:geographicNorthingMeasure>
+								<grd:geographicHeightMeasure>0.0</grd:geographicHeightMeasure>
+							</grd:GeographicCoordinateTuple>
+						</grd:GeographicPointLocation>
+					</grd:AddressPoint>
+				</grd:Address>
+				-->
+				<!--Alternative Address. Unstructured address can only be used alone-->
+				<grd:UnstructuredAddress>
+					<grd:unstructured>Bakketoppen 6, 9000 Aalborg</grd:unstructured>
+				</grd:UnstructuredAddress>
+			</memo:AttentionData>
+			<memo:ContactPoint>
+				<memo:contactGroup>22.33.44.55</memo:contactGroup>
+				<memo:contactPointID>241d39f6-998e-4929-b198-ccacbbf4b330</memo:contactPointID>
+				<memo:label>Kommunen, Pladsanvisningen</memo:label>
+				<memo:ContactInfo>
+					<memo:label>Barnets CPR nummer</memo:label>
+					<memo:value>2512169996</memo:value>
+				</memo:ContactInfo>
+				<memo:ContactInfo>
+					<memo:label>Barnets navn</memo:label>
+					<memo:value>Emilie Hansen</memo:value>
+				</memo:ContactInfo>
+			</memo:ContactPoint>
+		</memo:Recipient>
+		<memo:ContentData>
+			<grd:CPRdata>
+				<grd:cprNumber>2512169996</grd:cprNumber>
+				<grd:name>Emilie Hansen</grd:name>
+			</grd:CPRdata>
+			<grd:CVRdata>
+				<grd:cvrNumber>12345678</grd:cvrNumber>
+				<grd:companyName>[Virksomhed]</grd:companyName>
+			</grd:CVRdata>
+			<dmv:MotorVehicle>
+				<dmv:licenseNumber>AB12345</dmv:licenseNumber>
+				<dmv:chassisNumber>WFR18ZZ67W094959</dmv:chassisNumber>
+			</dmv:MotorVehicle>
+			<grd:PropertyNumber>
+				<grd:propertyNumber>ABC1234</grd:propertyNumber>
+			</grd:PropertyNumber>
+			<memo:CaseID>
+				<memo:caseID>SAG-12345</memo:caseID>
+				<memo:caseSystem>Sagssystem 1234</memo:caseSystem>
+			</memo:CaseID>
+			<kle:KLEdata>
+				<kle:subjectKey>00.00.00</kle:subjectKey>
+				<kle:version>Maj 2018</kle:version>
+				<kle:activityFacet>[Tekst]</kle:activityFacet>
+				<kle:label>[KLE tekst]</kle:label>
+			</kle:KLEdata>
+			<form:FORMdata>
+				<form:taskKey>00.00.00.00</form:taskKey>
+				<form:version>Opgavenøglen v2.12</form:version>
+				<form:activityFacet>Tekst]</form:activityFacet>
+				<form:label>[FORM tekst]</form:label>
+			</form:FORMdata>
+			<grd:ProductionUnit>
+				<grd:productionUnitNumber>1234567890</grd:productionUnitNumber>
+				<grd:productionUnitName>[Produktionsenhed]</grd:productionUnitName>
+			</grd:ProductionUnit>
+			<udd:Education>
+				<udd:educationCode>123ABC</udd:educationCode>
+				<udd:educationName>[Uddannelse navn]</udd:educationName>
+			</udd:Education>
+			<memo:AdditionalContentData>
+				<memo:contentDataType>Liste A</memo:contentDataType>
+				<memo:contentDataName>Navn 1</memo:contentDataName>
+				<memo:contentDataValue>Værdi 1</memo:contentDataValue>
+			</memo:AdditionalContentData>
+			<memo:AdditionalContentData>
+				<memo:contentDataType>Liste A</memo:contentDataType>
+				<memo:contentDataName>Navn 2</memo:contentDataName>
+				<memo:contentDataValue>Værdi 2</memo:contentDataValue>
+			</memo:AdditionalContentData>
+		</memo:ContentData>
+		<memo:ForwardData>
+			<memo:messageUUID>8C2EA15D-61FB-4BA9-9366-42F8B194C114</memo:messageUUID>
+			<memo:originalMessageDateTime>2021-03-15T12:00:00Z</memo:originalMessageDateTime>			
+			<memo:originalSender>Kommunen</memo:originalSender>
+			<memo:originalContentResponsible>Børnehaven, Tusindfryd</memo:originalContentResponsible>
+			<memo:contactPointID>241d39f6-998e-4929-b198-ccacbbf4b330</memo:contactPointID>
+			<memo:comment>kommentar til modtageren</memo:comment>
+		</memo:ForwardData>
+		<memo:ReplyData>
+			<memo:messageID>MSG-12344</memo:messageID>
+			<memo:messageUUID>8C2EA15D-61FB-4BA9-9366-42F8B194C114</memo:messageUUID>
+			<memo:senderID>12345678</memo:senderID>
+			<memo:recipientID>1234567890</memo:recipientID>
+			<memo:caseID>SAG-456</memo:caseID>
+			<memo:contactPointID>241d39f6-998e-4929-b198-ccacbbf4b330</memo:contactPointID>
+			<memo:generatingSystemID>ABC-123</memo:generatingSystemID>
+			<memo:comment>Tilbud om børnehaveplads til Emilie Hansen</memo:comment>
+			<memo:AdditionalReplyData>
+				<memo:label>Intern note</memo:label>
+				<memo:value>tekst</memo:value>
+			</memo:AdditionalReplyData>
+			<memo:AdditionalReplyData>
+				<memo:label>Intern reference</memo:label>
+				<memo:value>tekst</memo:value>
+			</memo:AdditionalReplyData>
+		</memo:ReplyData>
+		<memo:ReplyData>
+			<memo:messageID>MSG-12345</memo:messageID>
+			<memo:messageUUID>8C2EA15D-61FB-4BA9-9366-42F8B194C657</memo:messageUUID>
+			<memo:replyUUID>8C2EA15D-61FB-4BA9-9366-42F8B194C114</memo:replyUUID>
+			<memo:senderID>1234567890</memo:senderID>
+			<memo:recipientID>12345678</memo:recipientID>
+			<memo:caseID>SAG-4567</memo:caseID>
+			<memo:contactPointID>241d39f6-998e-4929-b198-ccacbbf4b330</memo:contactPointID>
+			<memo:generatingSystemID>ABC-1234</memo:generatingSystemID>
+			<memo:comment>tekst</memo:comment>
+			<memo:AdditionalReplyData>
+				<memo:label>Intern note</memo:label>
+				<memo:value>tekst</memo:value>
+			</memo:AdditionalReplyData>
+			<memo:AdditionalReplyData>
+				<memo:label>Intern reference</memo:label>
+				<memo:value>tekst</memo:value>
+			</memo:AdditionalReplyData>
+			<memo:AdditionalReplyData>
+				<memo:label>Vedr</memo:label>
+				<memo:value>tekst</memo:value>
+			</memo:AdditionalReplyData>
+			<memo:AdditionalReplyData>
+				<memo:label>Att</memo:label>
+				<memo:value>tekst</memo:value>
+			</memo:AdditionalReplyData>
+		</memo:ReplyData>
+	</memo:MessageHeader>
+	<memo:MessageBody>
+		<memo:createdDateTime>2018-05-03T12:00:00Z</memo:createdDateTime>
+		<memo:MainDocument>
+			<memo:mainDocumentID>456</memo:mainDocumentID>
+			<memo:label>Tilbud om børnehaveplads</memo:label>
+			<memo:File>
+				<memo:encodingFormat>application/pdf</memo:encodingFormat>
+				<memo:filename>Pladsanvisning.pdf</memo:filename>
+				<memo:language>da</memo:language>
+				<memo:content>VGhpcyBpcyBhIHRlc3Q=</memo:content>
+			</memo:File>
+			<memo:File>
+				<memo:encodingFormat>text/plain</memo:encodingFormat>
+				<memo:filename>Pladsanvisning.txt</memo:filename>
+				<memo:language>da</memo:language>
+				<memo:content>VGhpcyBpcyBhIHRlc3Q=</memo:content>
+			</memo:File>
+			<memo:Action>
+				<memo:label>Spørgeskema</memo:label>
+				<memo:actionCode>SELVBETJENING</memo:actionCode>
+				<memo:startDateTime>2018-11-09T12:00:00Z</memo:startDateTime>
+				<memo:endDateTime>2018-12-09T12:00:00Z</memo:endDateTime>
+				<memo:EntryPoint>
+					<memo:url>http://www.tusindfryd.dk/spørgeskema.html</memo:url>
+				</memo:EntryPoint>
+			</memo:Action>
+			<memo:Action>
+				<memo:label>Opret aftale i kalender</memo:label>
+				<memo:actionCode>AFTALE</memo:actionCode>
+				<memo:startDateTime>2018-11-10T09:00:00Z</memo:startDateTime>
+				<memo:endDateTime>2018-11-09T12:00:00Z</memo:endDateTime>
+				<memo:Reservation>
+					<memo:description>Opstart Tusindfryd</memo:description>
+					<memo:reservationUUID>8C2EA15D-61FB-4BA9-9366-42F8B194D241</memo:reservationUUID>
+					<memo:abstract>Opstart</memo:abstract>
+					<memo:location>Gl. Landevej 61, 9000 aalborg, Rød stue</memo:location>
+					<memo:startDateTime>2018-11-10T09:00:00Z</memo:startDateTime>
+					<memo:endDateTime>2018-11-10T12:00:00Z</memo:endDateTime>
+					<memo:organizerMail>info@tusindfryd.dk</memo:organizerMail>
+					<memo:organizerName>Jette Hansen</memo:organizerName>
+				</memo:Reservation>
+			</memo:Action>
+		</memo:MainDocument>
+		<memo:AdditionalDocument>
+			<memo:additionalDocumentID>789</memo:additionalDocumentID>
+			<memo:label>Tilbud om børnehaveplads</memo:label>
+			<memo:File>
+				<memo:encodingFormat>application/pdf</memo:encodingFormat>
+				<memo:filename>Pladsanvisning.pdf</memo:filename>
+				<memo:language>da</memo:language>
+				<memo:content>VGhpcyBpcyBhIHRlc3Q=</memo:content>
+			</memo:File>
+			<memo:File>
+				<memo:encodingFormat>application/msword</memo:encodingFormat>
+				<memo:filename>Praktiske oplysninger.doc</memo:filename>
+				<memo:language>da</memo:language>
+				<memo:content>VGhpcyBpcyBhIHRlc3Q=</memo:content>
+			</memo:File>
+			<memo:Action>
+				<memo:label>Tusindfryd hjemmeside</memo:label>
+				<memo:actionCode>INFORMATION</memo:actionCode>
+				<memo:startDateTime>2018-11-10T09:00:00Z</memo:startDateTime>
+				<memo:endDateTime>2018-11-09T12:00:00Z</memo:endDateTime>
+				<memo:EntryPoint>
+					<memo:url>http://www.tusindfryd.dk</memo:url>
+				</memo:EntryPoint>
+			</memo:Action>
+			<memo:Action>
+				<memo:label>Opret aftale i kalender</memo:label>
+				<memo:actionCode>AFTALE</memo:actionCode>
+				<memo:Reservation>
+					<memo:description>Introduktion til nye forældre</memo:description>
+					<memo:reservationUUID>8C2EA15D-61FB-4BA9-9366-42F8B194E845</memo:reservationUUID>
+					<memo:abstract>Invitation</memo:abstract>
+					<memo:location>Gl. Landevej 61, 9000 Aalborg</memo:location>
+					<memo:startDateTime>2018-11-10T19:00:00Z</memo:startDateTime>
+					<memo:endDateTime>2018-11-10T20:30:00Z</memo:endDateTime>
+					<memo:organizerMail>info@tusindfryd.dk</memo:organizerMail>
+					<memo:organizerName>Jette Hansen</memo:organizerName>
+				</memo:Reservation>
+			</memo:Action>
+		</memo:AdditionalDocument>
+		<memo:AdditionalDocument>
+			<memo:additionalDocumentID>678</memo:additionalDocumentID>
+			<memo:label>Tilbud om børnehaveplads, vejledning</memo:label>
+			<memo:File>
+				<memo:encodingFormat>application/pdf</memo:encodingFormat>
+				<memo:filename>vejledning.pdf</memo:filename>
+				<memo:language>da</memo:language>
+				<memo:content>VGhpcyBpcyBhIHRlc3Q=</memo:content>
+			</memo:File>
+			<memo:Action>
+				<memo:label>Register opslag</memo:label>
+				<memo:actionCode>SELVBETJENING</memo:actionCode>
+				<memo:startDateTime>2018-11-10T09:00:00Z</memo:startDateTime>
+				<memo:endDateTime>2018-11-09T12:00:00Z</memo:endDateTime>
+				<memo:EntryPoint>
+					<memo:url>http://registration.nemhandel.dk/NemHandelRegisterWeb/public/participant/info?key=5798009811578&amp;keytype=GLN</memo:url>
+				</memo:EntryPoint>
+			</memo:Action>
+		</memo:AdditionalDocument>
+		<memo:TechnicalDocument>
+			<memo:technicalDocumentID>222555</memo:technicalDocumentID>
+			<memo:label>Teknisk dokument</memo:label>
+			<memo:File>
+				<memo:encodingFormat>text/xml</memo:encodingFormat>
+				<memo:filename>TekniskDokument.xml</memo:filename>
+				<memo:language>da</memo:language>
+				<memo:content>VGhpcyBpcyBhIHRlc3Q=</memo:content>
+			</memo:File>
+		</memo:TechnicalDocument>
+	</memo:MessageBody>
+</memo:Message>
