@@ -35,11 +35,14 @@ class DigitalPostTest(unittest.TestCase):
         self.assertTrue(result)
 
         result = digital_post.is_registered(cpr=cpr, service="nemsms", kombit_access=self.kombit_access)
-        self.assertFalse(result)
+        self.assertTrue(result)
 
         # Test with nonsense.
         # This should result in False
         result = digital_post.is_registered(cpr="FooBar", service="digitalpost", kombit_access=self.kombit_access)
+        self.assertFalse(result)
+
+        result = digital_post.is_registered(cpr="FooBar", service="nemsms", kombit_access=self.kombit_access)
         self.assertFalse(result)
 
     def test_send_message(self):
@@ -51,8 +54,6 @@ class DigitalPostTest(unittest.TestCase):
                 messageType="DIGITALPOST",
                 messageUUID=str(uuid.uuid4()),
                 label="Python Serviceplatformen Test (Send Message)",
-                mandatory=False,
-                legalNotification=False,
                 sender=Sender(
                     senderID=os.environ["KOMBIT_TEST_CVR"],
                     idType="CVR",
