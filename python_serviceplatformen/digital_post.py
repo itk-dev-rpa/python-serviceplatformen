@@ -70,7 +70,6 @@ def send_message(message_type: Literal['Digital Post', 'NemSMS'],
     }
 
     message_xml = xml_util.dataclass_to_xml(message)
-    xml_util.validate_memo(message_xml)
 
     element = ElementTree.Element("kombi_request")
     ElementTree.SubElement(element, "KombiValgKode").text = message_type
