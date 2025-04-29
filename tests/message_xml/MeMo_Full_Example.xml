@@ -1,28 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<!--********************************************************************************************************* 
-https://digitaliser.dk/Media/638142936375938205/MeMo_Full_Example.xml
-MeMo XML example, Full This example illustrates a MeMo example with all possible elements 
-The example data is not correct business content 
-
-Date: 20181119 Charlotte Dahl Skovhus 
-
-Modifications 
-20181220: CDS: Changed from RDF/XML to XML 
-20190104: CDS: Changes to namespaces 
-20190114: CDS: Changes to namespaces 
-20190116: CDS: Changes to namespaces
-20191014: CDS: Changes acc to updated model
-20191114: CDS: Changes acc to updated model
-20191210: CDS: Added AdditionalContentData
-20200204: CDS: Changes acc to updated model (v0.9)
-20200312: CDS: DataTime format updated
-20200630: CDS: Changes acc to updated model (v1.0)
-20200901: CDS: Added ContactPoint for Sender
-20200901: CDS: Added ContactPoint for Sender and DocumentId names changed
-20210204: CDS: Added postType element
-20210317: CDS: Added originalMessageDateTime element
-***********************************************************************************************************-->
-<memo:Message xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:memo="https://DigitalPost.dk/MeMo-1" memoVersion="1.1" memoSchVersion="1.1.0" xmlns:gln="https://www.gs1.dk/gs1-standarder/identifikation/gln-global-location-number/" xmlns:udd="https://www.dst.dk/da/TilSalg/Forskningsservice/Dokumentation/hoejkvalitetsvariable/elevregister-2/udd#" xmlns:pnum="https://indberet.virk.dk/myndigheder/stat/ERST/P-enhedsloesningen" xmlns:form="http://www.form-online.dk/" xmlns:kle="http://kle-online.dk/" xmlns:dmv="https://motorregister.skat.dk/" xmlns:grd="https://data.gov.dk/model/core/" xmlns:sor="https://services.nsi.dk/en/Services/SOR" xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+<memo:Message xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:memo="https://DigitalPost.dk/MeMo-1" memoVersion="1.2" xmlns:gln="https://www.gs1.dk/gs1-standarder/identifikation/gln-global-location-number/" xmlns:udd="https://www.dst.dk/da/TilSalg/Forskningsservice/Dokumentation/hoejkvalitetsvariable/elevregister-2/udd#" xmlns:pnum="https://indberet.virk.dk/myndigheder/stat/ERST/P-enhedsloesningen" xmlns:form="http://www.form-online.dk/" xmlns:kle="http://kle-online.dk/" xmlns:dmv="https://motorregister.skat.dk/" xmlns:grd="https://data.gov.dk/model/core/" xmlns:sor="https://services.nsi.dk/en/Services/SOR" xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
 	<memo:MessageHeader>
 		<memo:messageType>DIGITALPOST</memo:messageType>
 		<memo:messageUUID>8C2EA15D-61FB-4BA9-9366-42F8B194C114</memo:messageUUID>
@@ -32,9 +9,9 @@ Modifications
 		<memo:notification>Du har fået digitalpost fra Kommunen vedr. din ansøgning om børnehaveplads.</memo:notification>
 		<memo:additionalNotification>Du har fået digitalpost fra Kommunen vedr. din ansøgning om børnehaveplads til Emilie Hansen</memo:additionalNotification>
 		<memo:reply>true</memo:reply>
-		<memo:replyByDateTime>2018-09-30T12:00:00Z</memo:replyByDateTime>
-		<memo:doNotDeliverUntilDate>2018-09-15</memo:doNotDeliverUntilDate>
-		<memo:mandatory>false</memo:mandatory>
+		<memo:replyByDateTime>2025-09-30T12:00:00Z</memo:replyByDateTime>
+		<memo:doNotDeliverUntilDate>2025-09-15</memo:doNotDeliverUntilDate>
+		<memo:mandatory>true</memo:mandatory>
 		<memo:legalNotification>false</memo:legalNotification>
 		<memo:postType>MYNDIGHEDSPOST</memo:postType>
 		<memo:Sender>
@@ -98,10 +75,9 @@ Modifications
 						<grd:geographicHeightMeasure>0.0</grd:geographicHeightMeasure>
 					</grd:AddressPoint>
 				</grd:Address>
-				<!--Alternative Address. Unstructured address can only be used alone-->
-				<!--<grd:UnstructuredAddress>
-					<grd:unstructured>[Ustruktureret adresseangivlese]</grd:unstructured>
-				</grd:UnstructuredAddress>-->
+				<grd:UnstructuredAddress>
+					<grd:unstructured>Bakketoppen 6, 9000 Aalborg</grd:unstructured>
+				</grd:UnstructuredAddress>
 			</memo:AttentionData>
 			<memo:ContactPoint>
 				<memo:contactGroup>22.33.44.55</memo:contactGroup>
@@ -116,11 +92,15 @@ Modifications
 					<memo:value>Emilie Hansen</memo:value>
 				</memo:ContactInfo>
 			</memo:ContactPoint>
+			<memo:Representative>
+				<memo:representativeID>87654321</memo:representativeID>
+				<memo:idType>CVR</memo:idType>
+				<memo:label>Repræsentant Kommune</memo:label>
+			</memo:Representative>
 		</memo:Sender>
 		<memo:Recipient>
 			<memo:recipientID>2211771212</memo:recipientID>
 			<memo:idType>CPR</memo:idType>
-			<!--<memo:idTypeLabel>eID</memo:idTypeLabel>-->
 			<memo:label>Mette Hansen</memo:label>
 			<memo:AttentionData>
 				<memo:AttentionPerson>
@@ -159,7 +139,6 @@ Modifications
 					<sor:sorIdentifier>468031000016004</sor:sorIdentifier>
 					<sor:entryName>[SOR tekst]</sor:entryName>
 				</sor:SORdata>
-				<!--
 				<grd:Address>
 					<grd:id>8c2ea15d-61fb-4ba9-9366-42f8b194c852</grd:id>
 					<grd:addressLabel>Gaden</grd:addressLabel>
@@ -171,17 +150,11 @@ Modifications
 					<grd:city>Aalborg</grd:city>
 					<grd:country>DK</grd:country>
 					<grd:AddressPoint>
-						<grd:GeographicPointLocation crsIdentifier="EPSG:25832">
-							<grd:GeographicCoordinateTuple>
 								<grd:geographicEastingMeasure>557501.23</grd:geographicEastingMeasure>
 								<grd:geographicNorthingMeasure>6336248.89</grd:geographicNorthingMeasure>
 								<grd:geographicHeightMeasure>0.0</grd:geographicHeightMeasure>
-							</grd:GeographicCoordinateTuple>
-						</grd:GeographicPointLocation>
 					</grd:AddressPoint>
 				</grd:Address>
-				-->
-				<!--Alternative Address. Unstructured address can only be used alone-->
 				<grd:UnstructuredAddress>
 					<grd:unstructured>Bakketoppen 6, 9000 Aalborg</grd:unstructured>
 				</grd:UnstructuredAddress>
@@ -256,6 +229,7 @@ Modifications
 			<memo:originalMessageDateTime>2021-03-15T12:00:00Z</memo:originalMessageDateTime>			
 			<memo:originalSender>Kommunen</memo:originalSender>
 			<memo:originalContentResponsible>Børnehaven, Tusindfryd</memo:originalContentResponsible>
+			<memo:originalRepresentative>Repræsentant Kommune</memo:originalRepresentative>			
 			<memo:contactPointID>241d39f6-998e-4929-b198-ccacbbf4b330</memo:contactPointID>
 			<memo:comment>kommentar til modtageren</memo:comment>
 		</memo:ForwardData>
@@ -328,7 +302,7 @@ Modifications
 				<memo:startDateTime>2018-11-09T12:00:00Z</memo:startDateTime>
 				<memo:endDateTime>2018-12-09T12:00:00Z</memo:endDateTime>
 				<memo:EntryPoint>
-					<memo:url>http://www.tusindfryd.dk/spørgeskema.html</memo:url>
+					<memo:url>https://www.tusindfryd.dk/spørgeskema.html</memo:url>
 				</memo:EntryPoint>
 			</memo:Action>
 			<memo:Action>
@@ -369,7 +343,7 @@ Modifications
 				<memo:startDateTime>2018-11-10T09:00:00Z</memo:startDateTime>
 				<memo:endDateTime>2018-11-09T12:00:00Z</memo:endDateTime>
 				<memo:EntryPoint>
-					<memo:url>http://www.tusindfryd.dk</memo:url>
+					<memo:url>https://www.tusindfryd.dk</memo:url>
 				</memo:EntryPoint>
 			</memo:Action>
 			<memo:Action>
@@ -402,7 +376,7 @@ Modifications
 				<memo:startDateTime>2018-11-10T09:00:00Z</memo:startDateTime>
 				<memo:endDateTime>2018-11-09T12:00:00Z</memo:endDateTime>
 				<memo:EntryPoint>
-					<memo:url>http://registration.nemhandel.dk/NemHandelRegisterWeb/public/participant/info?key=5798009811578&amp;keytype=GLN</memo:url>
+					<memo:url>https://registration.nemhandel.dk/NemHandelRegisterWeb/public/participant/info?key=5798009811578&amp;keytype=GLN</memo:url>
 				</memo:EntryPoint>
 			</memo:Action>
 		</memo:AdditionalDocument>
