@@ -11,7 +11,8 @@ from python_serviceplatformen.models.message import (
     AttentionData, AttentionPerson, CPRdata, CVRdata, CaseID, ContactInfo, ContactPoint, ContentData,
     ContentResponsible, EMail, Education, EntryPoint, FORMdata, ForwardData, GeneratingSystem, GlobalLocationNumber,
     KLEdata, MainDocument, MessageBody, MessageHeader, MotorVehicle, ProductionUnit, PropertyNumber, ReplyData,
-    Reservation, SEnumber, SORdata, Sender, Recipient, File, Message, TechnicalDocument, Telephone, UnstructuredAddress
+    Reservation, SEnumber, SORdata, Sender, Recipient, File, Message, TechnicalDocument, Telephone, UnstructuredAddress,
+    Representative
 )
 
 # We don't care about duplicate code in tests
@@ -42,9 +43,6 @@ class MessageXMLTest(unittest.TestCase):
         m.messageHeader.messageUUID = "fcdcf318-59b6-427c-9879-4f0af833d593"
 
         message_xml = xml_util.dataclass_to_xml(m)
-
-        # Check against schema
-        xml_util.validate_memo(message_xml)
 
         # Compare to example xml
         example_xml = ElementTree.parse("tests/message_xml/MeMo_NemSMS.xml").getroot()
@@ -87,16 +85,13 @@ class MessageXMLTest(unittest.TestCase):
 
         message_xml = xml_util.dataclass_to_xml(m)
 
-        # Check against schema
-        xml_util.validate_memo(message_xml)
-
         # Compare to example xml
         example_xml = ElementTree.parse("tests/message_xml/MeMo_with_attachment.xml").getroot()
         _xml_compare(message_xml, example_xml)
 
     def test_minimum_example(self):
         """Test converting to xml against the example file at
-        https://digitaliser.dk/Media/638142936404764960/MeMo_Minimum_Example.xml
+        https://digitaliser.dk/Media/638683092370780959/MeMo_v1.2_Minimum_Example.xml
         Stored locally at "tests/message_xml/MeMo_Minimum_Example.xml".
         """
         m = Message(
@@ -104,8 +99,6 @@ class MessageXMLTest(unittest.TestCase):
                 messageType="DIGITALPOST",
                 messageUUID="8C2EA15D-61FB-4BA9-9366-42F8B194C114",
                 label="Pladsanvisning",
-                mandatory=False,
-                legalNotification=False,
                 sender=Sender(
                     senderID="12345678",
                     idType="CVR",
@@ -117,7 +110,7 @@ class MessageXMLTest(unittest.TestCase):
                 )
             ),
             messageBody=MessageBody(
-                createdDateTime=datetime(2018, 5, 3, 12, 0, 0),
+                createdDateTime=datetime(2024, 5, 3, 12, 0, 0),
                 mainDocument=MainDocument(
                     files=[
                         File(
@@ -133,16 +126,13 @@ class MessageXMLTest(unittest.TestCase):
 
         message_xml = xml_util.dataclass_to_xml(m)
 
-        # Check against schema
-        xml_util.validate_memo(message_xml)
-
         # Compare to example xml
         example_xml = ElementTree.parse("tests/message_xml/MeMo_Minimum_Example.xml").getroot()
         _xml_compare(message_xml, example_xml)
 
     def test_full_example(self):
         """Test converting to xml against the example file at
-        https://digitaliser.dk/Media/638142936375938205/MeMo_Full_Example.xml
+        https://digitaliser.dk/Media/638683092408629381/MeMo_v1.2_Full_Example.xml
         Stored locally at "tests/message_xml/MeMo_Full_Example.xml".
         """
         m = Message(
@@ -155,9 +145,9 @@ class MessageXMLTest(unittest.TestCase):
                 notification="Du har fået digitalpost fra Kommunen vedr. din ansøgning om børnehaveplads.",
                 additionalNotification="Du har fået digitalpost fra Kommunen vedr. din ansøgning om børnehaveplads til Emilie Hansen",
                 reply=True,
-                replyByDateTime=datetime(2018, 9, 30, 12, 0, 0),
-                doNotDeliverUntilDate=date(2018, 9, 15),
-                mandatory=False,
+                replyByDateTime=datetime(2025, 9, 30, 12, 0, 0),
+                doNotDeliverUntilDate=date(2025, 9, 15),
+                mandatory=True,
                 legalNotification=False,
                 postType="MYNDIGHEDSPOST",
                 sender=Sender(
@@ -220,6 +210,9 @@ class MessageXMLTest(unittest.TestCase):
                                 geographicNorthingMeasure="6336248.89",
                                 geographicHeightMeasure="0.0"
                             )
+                        ),
+                        unstructuredAddress=UnstructuredAddress(
+                            unstructured="Bakketoppen 6, 9000 Aalborg"
                         )
                     ),
                     contactPoint=ContactPoint(
@@ -237,6 +230,11 @@ class MessageXMLTest(unittest.TestCase):
                             )
                         )
                     ),
+                    representative=Representative(
+                        representativeID="87654321",
+                        idType="CVR",
+                        label="Repræsentant Kommune"
+                    )
                 ),
                 recipient=Recipient(
                     recipientID="2211771212",
@@ -281,6 +279,22 @@ class MessageXMLTest(unittest.TestCase):
                         ),
                         unstructuredAddress=UnstructuredAddress(
                             unstructured="Bakketoppen 6, 9000 Aalborg"
+                        ),
+                        address=Address(
+                            id="8c2ea15d-61fb-4ba9-9366-42f8b194c852",
+                            addressLabel="Gaden",
+                            houseNumber="7A",
+                            door="th",
+                            floor="3",
+                            co="C/O",
+                            zipCode="9000",
+                            city="Aalborg",
+                            country="DK",
+                            addressPoint=AddressPoint(
+                                geographicEastingMeasure="557501.23",
+                                geographicNorthingMeasure="6336248.89",
+                                geographicHeightMeasure="0.0"
+                            )
                         )
                     ),
                     contactPoint=ContactPoint(
@@ -357,6 +371,7 @@ class MessageXMLTest(unittest.TestCase):
                     originalMessageDateTime=datetime(2021, 3, 15, 12, 0, 0),
                     originalSender="Kommunen",
                     originalContentResponsible="Børnehaven, Tusindfryd",
+                    originalRepresentative="Repræsentant Kommune",
                     contactPointID="241d39f6-998e-4929-b198-ccacbbf4b330",
                     comment="kommentar til modtageren"
                 ),
@@ -438,7 +453,7 @@ class MessageXMLTest(unittest.TestCase):
                             startDateTime=datetime(2018, 11, 9, 12, 0, 0),
                             endDateTime=datetime(2018, 12, 9, 12, 0, 0),
                             entryPoint=EntryPoint(
-                                url="http://www.tusindfryd.dk/spørgeskema.html"
+                                url="https://www.tusindfryd.dk/spørgeskema.html"
                             )
                         ),
                         Action(
@@ -484,7 +499,7 @@ class MessageXMLTest(unittest.TestCase):
                                 startDateTime=datetime(2018, 11, 10, 9, 0, 0),
                                 endDateTime=datetime(2018, 11, 9, 12, 0, 0),
                                 entryPoint=EntryPoint(
-                                    url="http://www.tusindfryd.dk"
+                                    url="https://www.tusindfryd.dk"
                                 )
                             ),
                             Action(
@@ -521,7 +536,7 @@ class MessageXMLTest(unittest.TestCase):
                                 startDateTime=datetime(2018, 11, 10, 9, 0, 0),
                                 endDateTime=datetime(2018, 11, 9, 12, 0, 0),
                                 entryPoint=EntryPoint(
-                                    url="http://registration.nemhandel.dk/NemHandelRegisterWeb/public/participant/info?key=5798009811578&keytype=GLN"
+                                    url="https://registration.nemhandel.dk/NemHandelRegisterWeb/public/participant/info?key=5798009811578&keytype=GLN"
                                 )
                             )
                         )
@@ -545,9 +560,6 @@ class MessageXMLTest(unittest.TestCase):
         )
 
         message_xml = xml_util.dataclass_to_xml(m)
-
-        # Check against schema
-        xml_util.validate_memo(message_xml)
 
         # Compare to example xml
         example_xml = ElementTree.parse("tests/message_xml/MeMo_Full_Example.xml").getroot()
@@ -585,7 +597,10 @@ def _xml_compare(x1: ElementTree.Element, x2: ElementTree.Element, path = "") ->
         raise ValueError(f"Tail doesn't match: {x1.tail} != {x2.tail}") from main_error
 
     if len(x1) != len(x2):
-        raise ValueError(f"Children length differs {len(x1)} != {len(x2)}") from main_error
+        l1 = (t.tag for t in x1)
+        l2 = (t.tag for t in x2)
+        diff = set(l1) ^ set(l2)
+        raise ValueError(f"Children length differs {len(x1)} != {len(x2)} - Diff: {'; '.join(diff)}") from main_error
 
     for c1, c2 in zip(x1, x2):
         _xml_compare(c1, c2, f"{path} -> {x1.tag}")

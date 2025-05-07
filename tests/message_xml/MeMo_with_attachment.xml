@@ -1,10 +1,8 @@
-<memo:Message xmlns:memo="https://DigitalPost.dk/MeMo-1" memoVersion="1.1" memoSchVersion="1.1.0">
+<memo:Message xmlns:memo="https://DigitalPost.dk/MeMo-1" memoVersion="1.2">
 	<memo:MessageHeader>
 		<memo:messageType>DIGITALPOST</memo:messageType>
 		<memo:messageUUID>78212f5c-6d79-4012-8ed1-e2420243bd17</memo:messageUUID>
 		<memo:label>Label Text</memo:label>
-		<memo:mandatory>false</memo:mandatory>
-		<memo:legalNotification>false</memo:legalNotification>
 		<memo:Sender>
 			<memo:senderID>Sender ID</memo:senderID>
 			<memo:idType>CVR</memo:idType>

@@ -1,23 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--*********************************************************************************************************
-https://digitaliser.dk/Media/638142936404764960/MeMo_Minimum_Example.xml
-MeMo XML example,Minimum. This example illustrates a MeMo example with only the required elements
-The example data is not correct business content 
-
-Date: 20191014 CDS 
-
-Modifications 
-20191014: CDS: Changed from RDF/XML to XML 
-20200304: CDS: Updted acc to Model v 0.9
-20200311: CDS: DateTime format updated
-***********************************************************************************************************-->
-<memo:Message xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:memo="https://DigitalPost.dk/MeMo-1" memoVersion="1.1" memoSchVersion="1.1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+<memo:Message xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:memo="https://DigitalPost.dk/MeMo-1" memoVersion="1.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
 	<memo:MessageHeader>
 		<memo:messageType>DIGITALPOST</memo:messageType>
 		<memo:messageUUID>8C2EA15D-61FB-4BA9-9366-42F8B194C114</memo:messageUUID>
 		<memo:label>Pladsanvisning</memo:label>
-		<memo:mandatory>false</memo:mandatory>
-		<memo:legalNotification>false</memo:legalNotification>
 		<memo:Sender>
 			<memo:senderID>12345678</memo:senderID>
 			<memo:idType>CVR</memo:idType>
@@ -29,7 +15,7 @@ Modifications
 		</memo:Recipient>
 	</memo:MessageHeader>
 	<memo:MessageBody>
-		<memo:createdDateTime>2018-05-03T12:00:00Z</memo:createdDateTime>
+		<memo:createdDateTime>2024-05-03T12:00:00Z</memo:createdDateTime>
 		<memo:MainDocument>
 			<memo:File>
 				<memo:encodingFormat>application/pdf</memo:encodingFormat>

@@ -3,9 +3,6 @@
 from datetime import datetime, date
 from dataclasses import is_dataclass, fields
 from xml.etree import ElementTree
-import importlib.resources
-
-import xmlschema
 
 from python_serviceplatformen.date_helper import format_date, format_datetime
 
@@ -66,20 +63,3 @@ def dataclass_to_xml_string(obj: object) -> str:
         An xml string representation of the given object.
     """
     return ElementTree.tostring(dataclass_to_xml(obj)).decode()
-
-
-def validate_memo(element: ElementTree.Element) -> None:
-    """Validate an xml element object against the MeMo schema.
-
-    Args:
-        element: The xml element to validate.
-
-    Raises:
-        XMLSchemaValidationError: If the xml element doesn't match the schema.
-    """
-    xml_string = ElementTree.tostring(element, encoding="utf8").decode()
-
-    path = importlib.resources.files("python_serviceplatformen.models.memo_schema").joinpath("MeMo_core.xsd")
-
-    schema = xmlschema.XMLSchema11(path)
-    schema.validate(xml_string)

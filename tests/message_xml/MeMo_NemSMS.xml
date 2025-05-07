@@ -1,11 +1,9 @@
-<memo:Message xmlns:memo="https://DigitalPost.dk/MeMo-1" memoVersion="1.1" memoSchVersion="1.1.0">
+<memo:Message xmlns:memo="https://DigitalPost.dk/MeMo-1" memoVersion="1.2">
 	<memo:MessageHeader>
 		<memo:messageType>NEMSMS</memo:messageType>
 		<memo:messageUUID>fcdcf318-59b6-427c-9879-4f0af833d593</memo:messageUUID>
 		<memo:label>Label Text</memo:label>
 		<memo:notification>Message Text</memo:notification>
-		<memo:mandatory>false</memo:mandatory>
-		<memo:legalNotification>false</memo:legalNotification>
 		<memo:Sender>
 			<memo:senderID>Sender ID</memo:senderID>
 			<memo:idType>CVR</memo:idType>

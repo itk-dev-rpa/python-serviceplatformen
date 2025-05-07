@@ -237,6 +237,7 @@ class ForwardData:
     originalMessageDateTime: datetime
     originalSender: str
     originalContentResponsible: Optional[str] = None
+    originalRepresentative: Optional[str] = None
     contactPointID: Optional[str] = None
     comment: Optional[str] = None
 
@@ -346,22 +347,29 @@ class AttentionData:
 
 
 @dataclass(kw_only=True)
+class Representative:
+    __namespace__ = NAME_SPACES["memo"]
+    representativeID: str
+    idType: Literal["CPR", "CVR"]
+    label: str
+
+
+@dataclass(kw_only=True)
 class Sender:
     __namespace__ = NAME_SPACES["memo"]
     senderID: str
-    idType: Literal["MyndighedsID", "CPR", "CVR", "Andet"]
+    idType: Literal["MyndighedsID", "CPR", "CVR"]
     label: str
-    idTypeLabel: Optional[str] = None
     attentionData: Optional[AttentionData] = None
     contactPoint: Optional[ContactPoint] = None
+    representative: Optional[Representative] = None
 
 
 @dataclass(kw_only=True)
 class Recipient:
     __namespace__ = NAME_SPACES["memo"]
     recipientID: str
-    idType: Literal["MyndighedsID", "CPR", "CVR", "Andet"]
-    idTypeLabel: Optional[str] = None
+    idType: Literal["MyndighedsID", "CPR", "CVR"]
     label: Optional[str] = None
     attentionData: Optional[AttentionData] = None
     contactPoint: Optional[ContactPoint] = None
@@ -397,8 +405,8 @@ class MessageHeader:
     reply: Optional[bool] = None
     replyByDateTime: Optional[datetime] = None
     doNotDeliverUntilDate: Optional[date] = None
-    mandatory: bool
-    legalNotification: bool
+    mandatory: Optional[bool] = None
+    legalNotification: Optional[bool] = None
     postType: Optional[str] = None
     sender: Sender
     recipient: Recipient
@@ -411,9 +419,7 @@ class MessageHeader:
 class Message:
     __namespace__ = NAME_SPACES["memo"]
     __attributes__ = {
-        "memoVersion": "1.1",
-        "memoSchVersion": "1.1.0",
-
+        "memoVersion": "1.2",
     }
     messageHeader: MessageHeader
     messageBody: Optional[MessageBody] = None
@@ -437,8 +443,6 @@ def create_nemsms(message_label: str, message_text: str, sender: Sender, recipie
             messageUUID=str(uuid.uuid4()),
             label=message_label,
             notification=message_text,
-            mandatory=False,
-            legalNotification=False,
             sender=sender,
             recipient=recipient
         )
@@ -462,8 +466,6 @@ def create_digital_post_with_main_document(label: str, sender: Sender, recipient
             messageType="DIGITALPOST",
             messageUUID=str(uuid.uuid4()),
             label=label,
-            mandatory=False,
-            legalNotification=False,
             sender=sender,
             recipient=recipient,
         ),

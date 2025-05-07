@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-nop
+## [2.0.0] - 2025-04-29
+
+### Changed
+
+- Updated to MeMo version 1.2
 
 ## [1.1.0] - 2024-11-01
 
@@ -25,6 +29,7 @@ nop
 - Module for authenticating towards Kombit's Serviceplatform API.
 - Function for checking if someone is registered for Digital Post or NemSMS.
 
-[Unreleased]: https://github.com/itk-dev-rpa/python-serviceplatformen/compare/1.1.0...HEAD
+[Unreleased]: https://github.com/itk-dev-rpa/python-serviceplatformen/compare/2.0.0...HEAD
+[2.0.0]: https://github.com/itk-dev-rpa/python-serviceplatformen/releases/tag/2.0.0
 [1.1.0]: https://github.com/itk-dev-rpa/python-serviceplatformen/releases/tag/1.1.0
 [1.0.0]: https://github.com/itk-dev-rpa/python-serviceplatformen/releases/tag/1.0.0
