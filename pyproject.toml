@@ -18,7 +18,8 @@ classifiers = [
 dependencies = [
   "requests == 2.*",
   "cryptography",
-  "xmlschema"
+  "xmlschema",
+  "python-qpid-proton>=0.39.0",
 ]
 
 [project.urls]
