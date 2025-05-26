@@ -79,9 +79,9 @@ def _get_saml_token(cvr: str, cert_path: str, entity_id: str, test: bool) -> str
     use_key = _extract_first_certificate(cert_path)
 
     if test:
-        url = "https://adgangsstyring.eksterntest-stoettesystemerne.dk/runtime/api/rest/wstrust/v1/issue"
+        url = "https://n2adgangsstyring.eksterntest-stoettesystemerne.dk/runtime/api/rest/wstrust/v1/issue"
     else:
-        url = "https://adgangsstyring.stoettesystemerne.dk/runtime/api/rest/wstrust/v1/issue"
+        url = "https://n2adgangsstyring.stoettesystemerne.dk/runtime/api/rest/wstrust/v1/issue"
 
     payload = {
         "TokenType": "http://docs.oasis-open.org/wss/oasis-wss-saml-token-profile-1.1#SAMLV2.0",
