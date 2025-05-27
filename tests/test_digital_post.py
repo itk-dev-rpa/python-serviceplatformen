@@ -31,18 +31,23 @@ class DigitalPostTest(unittest.TestCase):
         """Test getting registration status."""
         cpr = os.environ['DIGITAL_POST_TEST_CPR']
 
-        result = digital_post.is_registered(cpr=cpr, service="digitalpost", kombit_access=self.kombit_access)
+        result = digital_post.is_registered(id_num=cpr, service="digitalpost", kombit_access=self.kombit_access)
         self.assertTrue(result)
 
-        result = digital_post.is_registered(cpr=cpr, service="nemsms", kombit_access=self.kombit_access)
+        result = digital_post.is_registered(id_num=cpr, service="nemsms", kombit_access=self.kombit_access)
+        self.assertTrue(result)
+
+        cvr = os.environ["KOMBIT_TEST_CVR"]
+
+        result = digital_post.is_registered(id_num=cvr, service="digitalpost", kombit_access=self.kombit_access)
         self.assertTrue(result)
 
         # Test with nonsense.
         # This should result in False
-        result = digital_post.is_registered(cpr="FooBar", service="digitalpost", kombit_access=self.kombit_access)
+        result = digital_post.is_registered(id_num="FooBar", service="digitalpost", kombit_access=self.kombit_access)
         self.assertFalse(result)
 
-        result = digital_post.is_registered(cpr="FooBar", service="nemsms", kombit_access=self.kombit_access)
+        result = digital_post.is_registered(id_num="FooBar", service="nemsms", kombit_access=self.kombit_access)
         self.assertFalse(result)
 
     def test_send_message(self):
