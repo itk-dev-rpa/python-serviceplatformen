@@ -16,7 +16,7 @@ from python_serviceplatformen.models import xml_util
 from python_serviceplatformen.models.message import Message
 
 
-def is_registered(id_num: str, service: Literal['digitalpost', 'nemsms'], kombit_access: KombitAccess) -> bool:
+def is_registered(id_: str, service: Literal['digitalpost', 'nemsms'], kombit_access: KombitAccess) -> bool:
     """Check if the entity with the given id number is registered for
     either Digital Post or NemSMS.
 
@@ -31,9 +31,9 @@ def is_registered(id_num: str, service: Literal['digitalpost', 'nemsms'], kombit
     url = urllib.parse.urljoin(kombit_access.environment, "service/PostForespoerg_1/")
     url = urllib.parse.urljoin(url, service)
 
-    identifier = "cprNumber" if len(id_num) == 10 else "cvrNumber"
+    identifier = "cprNumber" if len(id_) == 10 else "cvrNumber"
     parameters = {
-        identifier: id_num
+        identifier: id_
     }
 
     headers = {
