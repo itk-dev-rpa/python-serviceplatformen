@@ -21,7 +21,7 @@ def is_registered(id_: str, service: Literal['digitalpost', 'nemsms'], kombit_ac
     either Digital Post or NemSMS.
 
     Args:
-        cpid_num: The id number of the entity to look up.
+        id_: The id number of the entity to look up.
         service: The service to look up for.
         kombit_access: The KombitAccess object used to authenticate.
 
