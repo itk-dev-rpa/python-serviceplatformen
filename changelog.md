@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.0] - 2025-05-27
+
 ### Added
 
 - Added option to check registration status of CVR numbers
@@ -39,7 +41,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Module for authenticating towards Kombit's Serviceplatform API.
 - Function for checking if someone is registered for Digital Post or NemSMS.
 
-[Unreleased]: https://github.com/itk-dev-rpa/python-serviceplatformen/compare/2.1.0...HEAD
+[Unreleased]: https://github.com/itk-dev-rpa/python-serviceplatformen/compare/3.0.0...HEAD
+[3.0.0]: https://github.com/itk-dev-rpa/python-serviceplatformen/releases/tag/3.0.0
 [2.1.0]: https://github.com/itk-dev-rpa/python-serviceplatformen/releases/tag/2.1.0
 [2.0.0]: https://github.com/itk-dev-rpa/python-serviceplatformen/releases/tag/2.0.0
 [1.1.0]: https://github.com/itk-dev-rpa/python-serviceplatformen/releases/tag/1.1.0
