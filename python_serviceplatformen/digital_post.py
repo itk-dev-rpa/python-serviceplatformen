@@ -42,7 +42,7 @@ def is_registered(id_: str, service: Literal['digitalpost', 'nemsms'], kombit_ac
         "authorization": kombit_access.get_access_token("http://entityid.kombit.dk/service/postforespoerg/1")
     }
 
-    response = requests.get(url, params=parameters, headers=headers, timeout=10)
+    response = requests.get(url, params=parameters, headers=headers, cert=kombit_access.cert_path, timeout=10)
     response.raise_for_status()
     return response.json()['result']
 
@@ -78,7 +78,7 @@ def send_message(message_type: Literal['Digital Post', 'NemSMS'],
 
     xml_body = ElementTree.tostring(element, encoding="utf8").decode()
 
-    response = requests.post(url=url, headers=headers, data=xml_body, timeout=10)
+    response = requests.post(url=url, headers=headers, data=xml_body, cert=kombit_access.cert_path, timeout=10)
     response.raise_for_status()
 
     return transaction_id
