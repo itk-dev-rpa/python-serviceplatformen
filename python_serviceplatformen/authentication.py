@@ -44,13 +44,12 @@ class KombitAccess:
 
         Args:
             entity_id: The entity id of the endpoint.
-            test: Whether to use the test api or not.
 
         Returns:
             An access token to be used in api calls.
 
         Raises:
-            HTTPError: If an access token couldn't be obtained for the given entity id.
+            ValueError: If an access token couldn't be obtained for the given entity id.
         """
         if entity_id in self._access_tokens and datetime.now() < self._access_tokens[entity_id][1]:
             return self._access_tokens[entity_id][0]
