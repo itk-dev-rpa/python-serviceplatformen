@@ -16,12 +16,12 @@ from python_serviceplatformen.models import xml_util
 from python_serviceplatformen.models.message import Message
 
 
-def is_registered(cpr: str, service: Literal['digitalpost', 'nemsms'], kombit_access: KombitAccess) -> bool:
-    """Check if the person with the given cpr number is registered for
+def is_registered(id_: str, service: Literal['digitalpost', 'nemsms'], kombit_access: KombitAccess) -> bool:
+    """Check if the entity with the given id number is registered for
     either Digital Post or NemSMS.
 
     Args:
-        cpr: The cpr number of the person to look up.
+        id_: The id number of the entity to look up.
         service: The service to look up for.
         kombit_access: The KombitAccess object used to authenticate.
 
@@ -31,8 +31,9 @@ def is_registered(cpr: str, service: Literal['digitalpost', 'nemsms'], kombit_ac
     url = urllib.parse.urljoin(kombit_access.environment, "service/PostForespoerg_1/")
     url = urllib.parse.urljoin(url, service)
 
+    identifier = "cprNumber" if len(id_) == 10 else "cvrNumber"
     parameters = {
-        "cprNumber": cpr
+        identifier: id_
     }
 
     headers = {
@@ -41,7 +42,7 @@ def is_registered(cpr: str, service: Literal['digitalpost', 'nemsms'], kombit_ac
         "authorization": kombit_access.get_access_token("http://entityid.kombit.dk/service/postforespoerg/1")
     }
 
-    response = requests.get(url, params=parameters, headers=headers, timeout=10)
+    response = requests.get(url, params=parameters, headers=headers, cert=kombit_access.cert_path, timeout=10)
     response.raise_for_status()
     return response.json()['result']
 
@@ -77,7 +78,7 @@ def send_message(message_type: Literal['Digital Post', 'NemSMS'],
 
     xml_body = ElementTree.tostring(element, encoding="utf8").decode()
 
-    response = requests.post(url=url, headers=headers, data=xml_body, timeout=10)
+    response = requests.post(url=url, headers=headers, data=xml_body, cert=kombit_access.cert_path, timeout=10)
     response.raise_for_status()
 
     return transaction_id
