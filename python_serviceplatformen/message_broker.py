@@ -1,3 +1,6 @@
+"""This module contains helper function to Kombit's Beskedfordeler SF1461.
+https://digitaliseringskataloget.dk/integration/sf1461
+"""
 
 import base64
 import ssl
@@ -79,7 +82,6 @@ def iterate_queue_messages(queue_id: str, kombit_access: KombitAccess, auto_ackn
         while True:
             method_frame, header_frame, body = channel.basic_get(queue_id, auto_ack=auto_acknowledge)
             if not any((method_frame, header_frame, body)):
-                # Queue is empty
-                return
-            else:
-                yield body
+                return  # Queue is empty
+
+            yield body
