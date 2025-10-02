@@ -21,14 +21,27 @@ class KombitAuthTest(unittest.TestCase):
         cert_path = os.environ["KOMBIT_TEST_CERT_PATH"]
         ka = KombitAccess(cvr=cvr, cert_path=cert_path, test=True)
 
-        # Test getting a token
-        token = ka.get_access_token("http://entityid.kombit.dk/service/postforespoerg/1")
-        self.assertIsInstance(token, str)
-        self.assertGreater(len(token), 0)
+        # Test getting a SAML token
+        saml_token = ka.get_saml_token("http://entityid.kombit.dk/service/postforespoerg/1")
+        self.assertIsInstance(saml_token, str)
+        self.assertGreater(len(saml_token), 0)
 
-        # Test reuse of token
-        token2 = ka.get_access_token("http://entityid.kombit.dk/service/postforespoerg/1")
-        self.assertEqual(token, token2)
+        # Test reuse of SAML token
+        saml_token2 = ka.get_saml_token("http://entityid.kombit.dk/service/postforespoerg/1")
+        self.assertEqual(saml_token, saml_token2)
+
+        # Test getting an access token
+        access_token = ka.get_access_token("http://entityid.kombit.dk/service/postforespoerg/1")
+        self.assertIsInstance(access_token, str)
+        self.assertGreater(len(access_token), 0)
+
+        # Test reuse of access token
+        access_token2 = ka.get_access_token("http://entityid.kombit.dk/service/postforespoerg/1")
+        self.assertEqual(access_token, access_token2)
+
+        # Test getting a nonsense token
+        with self.assertRaises(ValueError):
+            ka.get_saml_token("FooBar")
 
         # Test getting a nonsense token
         with self.assertRaises(ValueError):

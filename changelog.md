@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added integration to Kombit's BeskedFordeler (message broker).
+
+### Changed
+
+- Added SAML token cache to KombitAccess.
+
 ## [3.0.1] - 2025-08-27
 
 ### Fixed
