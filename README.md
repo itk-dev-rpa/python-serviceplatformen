@@ -76,7 +76,7 @@ from python_serviceplatformen.models.message import (
     Message, MessageHeader, Sender, Recipient, MessageBody, MainDocument, File
 )
 
-kombit_access = KombitAccess(cvr="55133018", cert_path=r"C:\Users\az68933\Desktop\SF1601\Certificate.pem")
+kombit_access = KombitAccess(cvr="55133018", cert_path=r"C:\somewhere\Certificate.pem")
 
 m = Message(
     messageHeader=MessageHeader(
@@ -117,6 +117,29 @@ digital_post.send_message("Digital Post", m, kombit_access)
 
 The message module also contains a few static helper functions to construct simple messages. These are not meant to
 be all encompassing but to help as a starting point.
+
+## Beskedfordeler
+
+This library supports retrieving messages from the Beskedfordeler using the AMQP BeskedHent service.
+
+**Note:** Remember to explicitly set the Beskedfordeler to use BeskedHent instead of BeskedFåTilsendt in the admin module.
+
+```python
+from python_serviceplatformen.authentication import KombitAccess
+from python_serviceplatformen import message_broker
+
+kombit_access = KombitAccess(cvr="55133018", cert_path=r"C:\somewhere\Certificate.pem")
+queue_id="fc42c3fd-a8d6-4a12-afc2-3ccb82d69994"
+
+for message in message_broker.iterate_queue_messages(queue_id, kombit_access):
+    print(message.decode())
+```
+
+Messages can by default only be read once and will be removed from the server after retrieving,
+so remember to store the information you need.
+
+Alternatively you can set `auto_acknowledge=False` on the `message_broker.iterate_queue_messages` function to
+keep messages in the queue. Keep in mind that Kombit wants the queue to be as empty as possible at all times.
 
 ## Tests
 
