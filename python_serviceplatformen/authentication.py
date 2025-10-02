@@ -17,6 +17,7 @@ class KombitAccess:
     cvr: str
     cert_path: str
     _access_tokens: dict[str, (str, datetime)]
+    _saml_tokens: dict[str, (str, datetime)]
     test: bool
     environment: str
 
@@ -31,6 +32,7 @@ class KombitAccess:
         self.cvr = cvr
         self.cert_path = cert_path
         self._access_tokens = {}
+        self._saml_tokens = {}
         self.test = test
 
         if test:
@@ -55,15 +57,38 @@ class KombitAccess:
             return self._access_tokens[entity_id][0]
 
         try:
-            saml_token = _get_saml_token(self.cvr, self.cert_path, entity_id, test=self.test)
+            saml_token = self.get_saml_token(entity_id)
             access_token = _get_access_token(saml_token, self.cert_path, test=self.test)
             self._access_tokens[entity_id] = access_token
             return access_token[0]
         except HTTPError as exc:
             raise ValueError(f"Couldn't obtain access token for {entity_id}: {exc.response.text}") from exc
 
+    def get_saml_token(self, entity_id: str) -> str:
+        """Get a SAML to the api endpoint with the given entity id.
+        If a SAML token already exists for the endpoint it is reused.
 
-def _get_saml_token(cvr: str, cert_path: str, entity_id: str, test: bool) -> str:
+        Args:
+            entity_id: The entity id of the endpoint.
+
+        Raises:
+            ValueError: If a SAML token couldn't be obtained for the given entity id.
+
+        Returns:
+            The SAML token as a string
+        """
+        if entity_id in self._saml_tokens and datetime.now() < self._saml_tokens[entity_id][1]:
+            return self._saml_tokens[entity_id][0]
+
+        try:
+            saml_token = _get_saml_token(self.cvr, self.cert_path, entity_id, test=self.test)
+            self._saml_tokens[entity_id] = saml_token
+            return saml_token[0]
+        except HTTPError as exc:
+            raise ValueError(f"Couldn't obtain SAML token for {entity_id}: {exc.response.text}") from exc
+
+
+def _get_saml_token(cvr: str, cert_path: str, entity_id: str, test: bool) -> tuple[str, datetime]:
     """Get a SAML token for the endpoint with the given entity id.
 
     Args:
@@ -73,7 +98,7 @@ def _get_saml_token(cvr: str, cert_path: str, entity_id: str, test: bool) -> str
         test: Whether to use the test api or not.
 
     Returns:
-        A SAML token as a string.
+        A tuple of the SAML token as a string and the expiry time.
     """
     use_key = _extract_first_certificate(cert_path)
 
@@ -100,8 +125,12 @@ def _get_saml_token(cvr: str, cert_path: str, entity_id: str, test: bool) -> str
 
     response = requests.post(url, json=payload, cert=cert_path, timeout=10)
     response.raise_for_status()
+    response = response.json()
 
-    return response.json()['RequestedSecurityToken']['Assertion']
+    saml_token = response['RequestedSecurityToken']['Assertion']
+    expiry_time = datetime.strptime(response["Lifetime"], "%m/%d/%Y %H:%M:%S") - timedelta(minutes=5)
+
+    return saml_token, expiry_time
 
 
 def _get_access_token(saml_token: str, cert_path: str, test: bool) -> tuple[str, datetime]:
