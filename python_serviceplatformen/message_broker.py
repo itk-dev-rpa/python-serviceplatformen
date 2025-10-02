@@ -1,58 +1,85 @@
-import os
-import subprocess
 
-import proton
-from proton import SSLDomain
-from proton.handlers import MessagingHandler
-from proton.reactor import Container
-from proton.utils import BlockingConnection
+import base64
+import ssl
+from collections.abc import Generator
+
+import pika
+from pika.credentials import ExternalCredentials
 
 from python_serviceplatformen.authentication import KombitAccess
 
+PORT = 5671
+VIRTUAL_HOST = "BF"
+PROD_HOST = "beskedfordeler.stoettesystemerne.dk"
+TEST_HOST = "beskedfordeler.eksterntest-stoettesystemerne.dk"
 
-URL = "amqp://beskedfordeler.eksterntest-stoettesystemerne.dk:5671"
-URL = "beskedfordeler.eksterntest-stoettesystemerne.dk:5671"
-QUEUE = "your-queue-name"
 
-CERT_PATH = "/mnt/c/Users/az68933/Desktop/SF1601/Certificate.crt.pem"
-KEY_PATH = "/mnt/c/Users/az68933/Desktop/SF1601/Certificate.key.pem"
-CERT_BUNDLE_PATH = "/mnt/c/Users/az68933/Desktop/SF1601/Certificate.pem"
-CA_CERT = "/mnt/c/Users/az68933/Desktop/SF1601/BFO_EXTTEST_Beskedfordeler_1.cer"
-
-class TLSExternalReceiver(MessagingHandler):
-    def __init__(self, url, queue_name, ssl_domain):
+class TokenCredentials(ExternalCredentials):
+    """A class for handling AMQP authorization using an
+    external token.
+    """
+    def __init__(self, token: bytes):
         super().__init__()
-        self.url = url
-        self.queue_name = queue_name
-        self.ssl_domain = ssl_domain
+        self.token = token
 
-    def on_start(self, event):
-        print("Start")
-        conn = event.container.connect(
-            self.url,
-            ssl_domain=self.ssl_domain,
-            sasl_enabled=True,
-            allowed_mechs='EXTERNAL'
-        )
-        event.container.create_receiver(conn, self.queue_name)
-        print("Started")
+    def response_for(self, start):
+        """Handle AMQP auth challenge."""
+        return self.TYPE, self.token
 
-    def on_message(self, event):
-        print("Received message:", event.message.body)
 
-def create_ssl_domain():
-    ssl_domain = SSLDomain(SSLDomain.MODE_CLIENT)
-    ssl_domain.set_credentials(CERT_PATH, KEY_PATH, None)
-    ssl_domain.set_trusted_ca_db(CA_CERT)
-    ssl_domain.set_peer_authentication(SSLDomain.VERIFY_PEER)
-    return ssl_domain
+def _setup_pika_params(kombit_access: KombitAccess) -> pika.ConnectionParameters:
+    """Setup parameters used by Pika to connect to the AMQP server.
 
-if __name__ == "__main__":
-    kombit_access = KombitAccess("55133018", r"C:\Users\az68933\Desktop\SF1601\Certificate.pem", test=True)
-    kombit_access.get_access_token("http://entityid.kombit.dk/service/bfo_modtag/2")
+    Args:
+        kombit_access: The KombitAccess object used to authenticate.
 
-    # BlockingConnection(url=URL, ssl_domain=CERT_BUNDLE_PATH)
+    Returns:
+        A pika.ConnectionsParameters object that can be used to connect.
+    """
+    saml_token = kombit_access.get_saml_token("http://entityid.kombit.dk/service/bfo_modtag/2")
+    saml_decoded = base64.b64decode(saml_token)
 
-    ssl = create_ssl_domain()
-    handler = TLSExternalReceiver(URL, QUEUE, ssl)
-    Container(handler).run()
+    if kombit_access.test:
+        host = TEST_HOST
+    else:
+        host = PROD_HOST
+
+    ssl_context = ssl.create_default_context()
+    ssl_options = pika.SSLOptions(context=ssl_context, server_hostname=host)
+    credentials = TokenCredentials(token=saml_decoded)
+
+    return pika.ConnectionParameters(
+        host=host,
+        port=PORT,
+        virtual_host=VIRTUAL_HOST,
+        ssl_options=ssl_options,
+        credentials=credentials
+    )
+
+
+def iterate_queue_messages(queue_id: str, kombit_access: KombitAccess, auto_acknowledge: bool = True) -> Generator[bytes]:
+    """Iterate over message in the given queue.
+    Messages are retrieved one at a time from the queue server.
+    If auto_acknowledge is true messages are removed from the queue server
+    and cannot be retrieved again.
+
+    Args:
+        queue_id: The id of the queue to get messages from. Most likely a UUID.
+        kombit_access: The KombitAccess object used for authentication.
+        auto_acknowledge: Whether to mark messages as read after receiving them. Defaults to True.
+
+    Yields:
+        The message body as bytes.
+    """
+    params = _setup_pika_params(kombit_access)
+
+    with pika.BlockingConnection(parameters=params) as connection:
+        channel = connection.channel()
+
+        while True:
+            method_frame, header_frame, body = channel.basic_get(queue_id, auto_ack=auto_acknowledge)
+            if not any((method_frame, header_frame, body)):
+                # Queue is empty
+                return
+            else:
+                yield body
