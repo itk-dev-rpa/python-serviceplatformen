@@ -83,8 +83,6 @@ m = Message(
         messageType="DIGITALPOST",
         messageUUID=str(uuid.uuid4()),
         label="Digital Post test message",
-        mandatory=False,
-        legalNotification=False,
         sender=Sender(
             senderID="12345678",
             idType="CVR",
@@ -112,6 +110,9 @@ m = Message(
 
 digital_post.send_message("Digital Post", m, kombit_access)
 ```
+
+**Note**: If you want to trace the message later in Beskedfordeleren you should save the value of
+`Message.MessageHeader.messageUUID`.
 
 ### Recipes
 
