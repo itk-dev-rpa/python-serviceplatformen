@@ -16,9 +16,10 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
 ]
 dependencies = [
-  "requests == 2.*",
+  "requests==2.*",
   "cryptography",
-  "xmlschema"
+  "xmlschema",
+  "pika==1.3.*",
 ]
 
 [project.urls]
