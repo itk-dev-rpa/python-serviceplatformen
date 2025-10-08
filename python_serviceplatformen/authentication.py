@@ -14,6 +14,7 @@ from cryptography.hazmat.primitives import serialization
 
 @dataclass
 class Token:
+    """Dataclass representing a token with an expiry time."""
     value: str
     expiry_time: datetime
 
