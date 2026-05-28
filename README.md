@@ -119,6 +119,76 @@ digital_post.send_message("Digital Post", m, kombit_access)
 The message module also contains a few static helper functions to construct simple messages. These are not meant to
 be all encompassing but to help as a starting point.
 
+## Physical mail
+
+This library supports sending physical letters through the SF1601 Kombi API (Fjernprint).
+The letter content is sent as a base64-encoded file (typically a PDF) along with recipient
+address information.
+
+### Fjernprint model
+
+A data class model based on the official XSDs has been defined to help build the request payload.
+The model is located in the physical_mail module:
+
+```python
+from python_serviceplatformen.models.physical_mail import ForsendelseI
+```
+
+**Note:** Like the MeMo model, the physical mail model doesn't follow the normal Python naming
+conventions in order to stay close to the source XSD names.
+
+### Send physical mail
+
+To send a letter, construct a `ForsendelseI` object and pass it to `send_physical_mail`:
+
+```python
+import base64
+import uuid
+
+from python_serviceplatformen.authentication import KombitAccess
+from python_serviceplatformen import digital_post
+from python_serviceplatformen.models.physical_mail import (
+    AfsendelseIdentifikator, AfsendelseModtager, CountryIdentificationCode,
+    CountryIdentificationSchemeType, CPRnummerIdentifikator, DokumentParametre,
+    FilformatNavn, ForsendelseI, ForsendelseModtager, ForsendelseTypeIdentifikator,
+    MeddelelseIndholdData, ModtagerAdresse, PersonName, PostCodeIdentifier,
+    StreetBuildingIdentifier, StreetName, TransaktionsParametreI,
+)
+
+kombit_access = KombitAccess(cvr="55133018", cert_path=r"C:\somewhere\Certificate.pem")
+
+with open("letter.pdf", "rb") as f:
+    pdf_bytes = f.read()
+
+forsendelse = ForsendelseI(
+    afsendelse_identifikator=AfsendelseIdentifikator(value=str(uuid.uuid4())),
+    forsendelse_type_identifikator=ForsendelseTypeIdentifikator(value=265),
+    forsendelse_modtager=ForsendelseModtager(
+        afsendelse_modtager=AfsendelseModtager(
+            cpr_nummer_identifikator=CPRnummerIdentifikator(value="1234567890")
+        ),
+        modtager_adresse=ModtagerAdresse(
+            person_name=PersonName(value="Test Testesen"),
+            street_name=StreetName(value="Testvej"),
+            street_building_identifier=StreetBuildingIdentifier(value="3"),
+            post_code_identifier=PostCodeIdentifier(value="2300"),
+            country_identification_code=CountryIdentificationCode(
+                value="DK",
+                scheme=CountryIdentificationSchemeType.ISO3166_ALPHA2,
+            ),
+        ),
+    ),
+    filformat_navn=FilformatNavn(value="pdf"),
+    meddelelse_indhold_data=MeddelelseIndholdData(
+        value=base64.b64encode(pdf_bytes).decode()
+    ),
+    transaktions_parametre_i=TransaktionsParametreI(),
+    dokument_parametre=DokumentParametre(),
+)
+
+transaction_id = digital_post.send_physical_mail(forsendelse, kombit_access)
+```
+
 ## Beskedfordeler
 
 This library supports retrieving messages from the Beskedfordeler using the AMQP BeskedHent service.
