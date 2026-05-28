@@ -14,6 +14,11 @@ from python_serviceplatformen.authentication import KombitAccess
 from python_serviceplatformen.date_helper import format_datetime
 from python_serviceplatformen.models import xml_util
 from python_serviceplatformen.models.message import Message
+from python_serviceplatformen.models.physical_mail import ForsendelseI
+
+from xsdata.formats.dataclass.context import XmlContext
+from xsdata.formats.dataclass.serializers import XmlSerializer
+from xsdata.formats.dataclass.serializers.config import SerializerConfig
 
 
 def is_registered(id_: str, service: Literal['digitalpost', 'nemsms'], kombit_access: KombitAccess) -> bool:
@@ -75,6 +80,46 @@ def send_message(message_type: Literal['Digital Post', 'NemSMS'],
     element = ElementTree.Element("kombi_request")
     ElementTree.SubElement(element, "KombiValgKode").text = message_type
     element.append(message_xml)
+
+    xml_body = ElementTree.tostring(element, encoding="utf8").decode()
+
+    response = requests.post(url=url, headers=headers, data=xml_body, cert=kombit_access.cert_path, timeout=10)
+    response.raise_for_status()
+
+    return transaction_id
+
+
+def send_physical_mail(forsendelse: ForsendelseI, kombit_access: KombitAccess) -> str:
+    """Send a physical letter via the SF1601 Kombi API.
+
+    Args:
+        forsendelse: The ForsendelseI object describing the letter to send.
+        kombit_access: The KombitAccess object used to authenticate.
+
+    Returns:
+        The uuid of the transaction to trace the message later.
+    """
+    url = urllib.parse.urljoin(kombit_access.environment, "service/KombiPostAfsend_1/kombi")
+
+    transaction_id = str(uuid.uuid4())
+
+    headers = {
+        "X-TransaktionsId": transaction_id,
+        "X-TransaktionsTid": format_datetime(datetime.now()),
+        "authorization": kombit_access.get_access_token("http://entityid.kombit.dk/service/kombipostafsend/1"),
+        "Content-Type": "application/xml"
+    }
+
+    serializer = XmlSerializer(
+        context=XmlContext(),
+        config=SerializerConfig(xml_declaration=False)
+    )
+    forsendelse_element = ElementTree.fromstring(serializer.render(forsendelse))
+
+    element = ElementTree.Element("kombi_request")
+    ElementTree.SubElement(element, "KombiValgKode").text = "Fysisk Post"
+    samling = ElementTree.SubElement(element, "{urn:oio:fjernprint:1.0.0}ForsendelseISamling")
+    samling.append(forsendelse_element)
 
     xml_body = ElementTree.tostring(element, encoding="utf8").decode()
 
