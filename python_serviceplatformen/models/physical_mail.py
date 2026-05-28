@@ -1345,13 +1345,12 @@ class KontaktOplysningType:
             "namespace": "http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/",
         },
     )
-    post_code_identifier: list[PostCodeIdentifier] = field(
-        default_factory=list,
+    post_code_identifier: Optional[PostCodeIdentifier] = field(
+        default=None,
         metadata={
             "name": "PostCodeIdentifier",
             "type": "Element",
             "namespace": "http://rep.oio.dk/ebxml/xml/schemas/dkcc/2005/03/15/",
-            "max_occurs": 2,
         },
     )
     district_subdivision_identifier: Optional[DistrictSubdivisionIdentifier] = field(
@@ -1741,7 +1740,7 @@ def create_physical_mail(
                 person_name=PersonName(value=recipient_name),
                 street_name=StreetName(value=street_name),
                 street_building_identifier=StreetBuildingIdentifier(value=street_building),
-                post_code_identifier=[PostCodeIdentifier(value=postal_code)],
+                post_code_identifier=PostCodeIdentifier(value=postal_code),
                 country_identification_code=CountryIdentificationCode(
                     value=country_code,
                     scheme=CountryIdentificationSchemeType.ISO3166_ALPHA2

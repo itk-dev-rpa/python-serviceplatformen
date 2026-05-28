@@ -53,7 +53,7 @@ class PhysicalMailXMLTest(unittest.TestCase):
                     person_name=PersonName(value="Test Testesen"),
                     street_name=StreetName(value="Testvej"),
                     street_building_identifier=StreetBuildingIdentifier(value="3"),
-                    post_code_identifier=[PostCodeIdentifier(value="2300")],
+                    post_code_identifier=PostCodeIdentifier(value="2300"),
                     country_identification_code=CountryIdentificationCode(
                         value="DK",
                         scheme=CountryIdentificationSchemeType.ISO3166_ALPHA2,
