@@ -1,0 +1,20 @@
+﻿<fjernprint:ForsendelseI xmlns:fjernprint="urn:oio:fjernprint:1.0.0">
+	<ns2:AfsendelseIdentifikator xmlns:ns2="urn:oio:fjernprint:1.0.0">dc3303Soa44e-9c1c-46aaf36974de</ns2:AfsendelseIdentifikator>
+	<ns3:ForsendelseTypeIdentifikator xmlns:ns3="urn:oio:fjernprint:1.0.0">265</ns3:ForsendelseTypeIdentifikator>
+	<ns4:ForsendelseModtager xmlns:ns4="urn:oio:fjernprint:1.0.0">
+		<ns5:AfsendelseModtager xmlns:ns5="urn:oio:dkal:1.0.0">
+			<ns6:CPRnummerIdentifikator xmlns:ns6="urn:oio:adir:dagpenge:2009.07.01">0000000000</ns6:CPRnummerIdentifikator>
+		</ns5:AfsendelseModtager>
+		<ns4:ModtagerAdresse>
+			<ns7:PersonName xmlns:ns7="http://rep.oio.dk/itst.dk/xml/schemas/2006/01/17/">Test Testesen</ns7:PersonName>
+			<ns8:StreetName xmlns:ns8="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2005/03/15/">Testvej</ns8:StreetName>
+			<ns9:StreetBuildingIdentifier xmlns:ns9="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/">3</ns9:StreetBuildingIdentifier>
+			<ns10:PostCodeIdentifier xmlns:ns10="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2005/03/15/">2300</ns10:PostCodeIdentifier>
+			<ns11:CountryIdentificationCode scheme="iso3166-alpha2" xmlns:ns11="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/">DK</ns11:CountryIdentificationCode>
+		</ns4:ModtagerAdresse>
+	</ns4:ForsendelseModtager>
+	<ns12:FilformatNavn xmlns:ns12="urn:oio:dkal:1.0.0">pdf</ns12:FilformatNavn>
+	<ns13:MeddelelseIndholdData xmlns:ns13="urn:oio:dkal:1.0.0">VGhpcyBpcyBhIHRlc3Q=</ns13:MeddelelseIndholdData>
+	<ns14:TransaktionsParametreI xmlns:ns14="urn:oio:fjernprint:1.0.0"/>
+	<ns15:DokumentParametre xmlns:ns15="urn:oio:fjernprint:1.0.0"/>
+</fjernprint:ForsendelseI>

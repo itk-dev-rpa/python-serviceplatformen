@@ -14,6 +14,7 @@ from python_serviceplatformen.models.message import (
     Reservation, SEnumber, SORdata, Sender, Recipient, File, Message, TechnicalDocument, Telephone, UnstructuredAddress,
     Representative
 )
+from tests.xml_compare import xml_compare
 
 # We don't care about duplicate code in tests
 # pylint: disable=R0801
@@ -46,7 +47,7 @@ class MessageXMLTest(unittest.TestCase):
 
         # Compare to example xml
         example_xml = ElementTree.parse("tests/message_xml/MeMo_NemSMS.xml").getroot()
-        _xml_compare(message_xml, example_xml)
+        xml_compare(message_xml, example_xml)
 
     def test_digital_post_with_attached_files(self):
         """Test creating a Digital Post message
@@ -87,7 +88,7 @@ class MessageXMLTest(unittest.TestCase):
 
         # Compare to example xml
         example_xml = ElementTree.parse("tests/message_xml/MeMo_with_attachment.xml").getroot()
-        _xml_compare(message_xml, example_xml)
+        xml_compare(message_xml, example_xml)
 
     def test_minimum_example(self):
         """Test converting to xml against the example file at
@@ -128,7 +129,7 @@ class MessageXMLTest(unittest.TestCase):
 
         # Compare to example xml
         example_xml = ElementTree.parse("tests/message_xml/MeMo_Minimum_Example.xml").getroot()
-        _xml_compare(message_xml, example_xml)
+        xml_compare(message_xml, example_xml)
 
     def test_full_example(self):
         """Test converting to xml against the example file at
@@ -563,61 +564,7 @@ class MessageXMLTest(unittest.TestCase):
 
         # Compare to example xml
         example_xml = ElementTree.parse("tests/message_xml/MeMo_Full_Example.xml").getroot()
-        _xml_compare(message_xml, example_xml)
-
-
-def _xml_compare(x1: ElementTree.Element, x2: ElementTree.Element, path = "") -> None:
-    """Compare two xml elements recursively.
-
-    Args:
-        x1: The first element to compare.
-        x2: The second element to compare
-        path: The path to the elements used in error messages. Defaults to "".
-
-    Raises:
-        ValueError: If the elements or their children don't match.
-    """
-    main_error = ValueError(f"Elements {x1.tag} and {x2.tag} doesn't match. Path: {path}")
-    if x1.tag != x2.tag:
-        raise ValueError(f'Tags do not match: {x1.tag} != {x2.tag}') from main_error
-
-    for name, value in x1.attrib.items():
-        value_2 = x2.attrib.get(name)
-        if value_2 != value:
-            raise ValueError(f'Attribute {name} do not match: {value} != {value_2}') from main_error
-
-    for name in x2.attrib.keys():
-        if name not in x1.attrib:
-            raise ValueError(f'x2 has an attribute x1 is missing: {name}') from main_error
-
-    if not _text_compare(x1.text, x2.text):
-        raise ValueError(f"Text value doesn't match: {x1.text} != {x2.text}") from main_error
-
-    if not _text_compare(x1.tail, x2.tail):
-        raise ValueError(f"Tail doesn't match: {x1.tail} != {x2.tail}") from main_error
-
-    if len(x1) != len(x2):
-        l1 = (t.tag for t in x1)
-        l2 = (t.tag for t in x2)
-        diff = set(l1) ^ set(l2)
-        raise ValueError(f"Children length differs {len(x1)} != {len(x2)} - Diff: {'; '.join(diff)}") from main_error
-
-    for c1, c2 in zip(x1, x2):
-        _xml_compare(c1, c2, f"{path} -> {x1.tag}")
-
-
-def _text_compare(s1: str | None, s2: str | None) -> bool:
-    """Compare two strings that might be None.
-    Ignores leading and trailing whitespace.
-
-    Args:
-        s1: The first string to compare.
-        s2: The second string to compare.
-
-    Returns:
-        True if the strings match.
-    """
-    return (s1 or '').strip() == (s2 or '').strip()
+        xml_compare(message_xml, example_xml)
 
 
 if __name__ == "__main__":
