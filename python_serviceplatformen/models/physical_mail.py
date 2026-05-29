@@ -9,11 +9,13 @@ from enum import Enum
 from typing import Optional
 import uuid
 
-from xsdata.formats.dataclass.context import XmlContext
-from xsdata.formats.dataclass.serializers import XmlSerializer
-from xsdata.formats.dataclass.serializers.config import SerializerConfig
 from xsdata.models.datatype import XmlDate, XmlDateTime
 
+
+# Naming follows the names of the official ForsendelseI format
+# Class descriptions are in the official ForsendelseI docs
+# We can't change the number of class attributes
+# pylint: disable=invalid-name, missing-class-docstring, too-many-instance-attributes, too-few-public-methods, too-many-lines
 
 @dataclass(kw_only=True)
 class PersonCivilRegistrationIdentifier:
@@ -1720,26 +1722,51 @@ class ForsendelseI(ForsendelseIType):
 
 
 def create_physical_mail(
-    recipient_cpr: str,
     recipient_name: str,
-    street_name: str,
-    street_building: str,
+    address_street: str,
+    address_number: str,
+    address_floor: str | None,
+    address_suite: str | None,
+    address_district: str,
     postal_code: str,
+    forsendelse_type_identifikator: int,
     file_content: bytes,
     file_format: str = "pdf",
     country_code: str = "DK",
-) -> str:
+) -> ForsendelseI:
+    """Create a simple ForsendelseI object with a recipient and letter file.
+    Note: In accordance to the documentation recipient CPR is hardcoded to '0000000000'.
+
+    Args:
+        recipient_name: The full name of the recipient.
+        address_street: The street name of the recipient's address.
+        address_number: The building number (and any letter) of the recipient's address.
+        address_floor: The floor of the recipient's address, or None if not applicable.
+        address_suite: The suite/door identifier of the recipient's address, or None if not applicable.
+        address_district: The district/city of the recipient's address.
+        postal_code: The postal code of the recipient's address.
+        forsendelse_type_identifikator: A special code that is handed out by the mail provider.
+        file_content: The raw bytes of the letter file to send. Will be base64 encoded.
+        file_format: The file format of the letter content. Defaults to "pdf".
+        country_code: The ISO 3166-1 alpha-2 country code of the recipient's address. Defaults to "DK".
+
+    Returns:
+        A ForsendelseI object populated with the given recipient and letter, ready to be sent.
+    """
     return ForsendelseI(
         afsendelse_identifikator=AfsendelseIdentifikator(value=str(uuid.uuid4())),
-        forsendelse_type_identifikator=ForsendelseTypeIdentifikator(value=265),  # TODO: What is this?
+        forsendelse_type_identifikator=ForsendelseTypeIdentifikator(value=forsendelse_type_identifikator),
         forsendelse_modtager=ForsendelseModtager(
             afsendelse_modtager=AfsendelseModtager(
-                cpr_nummer_identifikator=CPRnummerIdentifikator(value=recipient_cpr)
+                cpr_nummer_identifikator=CPRnummerIdentifikator(value="0000000000")
             ),
             modtager_adresse=ModtagerAdresse(
                 person_name=PersonName(value=recipient_name),
-                street_name=StreetName(value=street_name),
-                street_building_identifier=StreetBuildingIdentifier(value=street_building),
+                street_name=StreetName(value=address_street),
+                street_building_identifier=StreetBuildingIdentifier(value=address_number),
+                floor_identifier=FloorIdentifier(value=address_floor) if address_floor else None,
+                suite_identifier=SuiteIdentifier(value=address_suite) if address_suite else None,
+                district_subdivision_identifier=DistrictSubdivisionIdentifier(value=address_district),
                 post_code_identifier=PostCodeIdentifier(value=postal_code),
                 country_identification_code=CountryIdentificationCode(
                     value=country_code,
@@ -1749,7 +1776,7 @@ def create_physical_mail(
         ),
         filformat_navn=FilformatNavn(value=file_format),
         meddelelse_indhold_data=MeddelelseIndholdData(
-            value=base64.b64encode(file_content).decode("ascii")
+            value=base64.b64encode(file_content).decode()
         ),
         transaktions_parametre_i=TransaktionsParametreI(),
         dokument_parametre=DokumentParametre()
