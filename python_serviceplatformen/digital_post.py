@@ -9,16 +9,15 @@ from typing import Literal
 from xml.etree import ElementTree
 
 import requests
+from xsdata.formats.dataclass.context import XmlContext
+from xsdata.formats.dataclass.serializers import XmlSerializer
+from xsdata.formats.dataclass.serializers.config import SerializerConfig
 
 from python_serviceplatformen.authentication import KombitAccess
 from python_serviceplatformen.date_helper import format_datetime
 from python_serviceplatformen.models import xml_util
 from python_serviceplatformen.models.message import Message
 from python_serviceplatformen.models.physical_mail import ForsendelseI
-
-from xsdata.formats.dataclass.context import XmlContext
-from xsdata.formats.dataclass.serializers import XmlSerializer
-from xsdata.formats.dataclass.serializers.config import SerializerConfig
 
 
 def is_registered(id_: str, service: Literal['digitalpost', 'nemsms'], kombit_access: KombitAccess) -> bool:
