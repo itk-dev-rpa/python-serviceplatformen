@@ -1722,29 +1722,17 @@ class ForsendelseI(ForsendelseIType):
 
 
 def create_physical_mail(
-    recipient_name: str,
-    address_street: str,
-    address_number: str,
-    address_floor: str | None,
-    address_suite: str | None,
-    address_district: str,
-    postal_code: str,
     forsendelse_type_identifikator: int,
     file_content: bytes,
     file_format: str = "pdf",
     country_code: str = "DK",
 ) -> ForsendelseI:
-    """Create a simple ForsendelseI object with a recipient and letter file.
+    """Create a simple ForsendelseI object with a letter file.
+    The letter file is expected to have a correct receiver address
+    readable from a standard windowed envelope.
     Note: In accordance to the documentation recipient CPR is hardcoded to '0000000000'.
 
     Args:
-        recipient_name: The full name of the recipient.
-        address_street: The street name of the recipient's address.
-        address_number: The building number (and any letter) of the recipient's address.
-        address_floor: The floor of the recipient's address, or None if not applicable.
-        address_suite: The suite/door identifier of the recipient's address, or None if not applicable.
-        address_district: The district/city of the recipient's address.
-        postal_code: The postal code of the recipient's address.
         forsendelse_type_identifikator: A special code that is handed out by the mail provider.
         file_content: The raw bytes of the letter file to send. Will be base64 encoded.
         file_format: The file format of the letter content. Defaults to "pdf".
@@ -1761,13 +1749,6 @@ def create_physical_mail(
                 cpr_nummer_identifikator=CPRnummerIdentifikator(value="0000000000")
             ),
             modtager_adresse=ModtagerAdresse(
-                person_name=PersonName(value=recipient_name),
-                street_name=StreetName(value=address_street),
-                street_building_identifier=StreetBuildingIdentifier(value=address_number),
-                floor_identifier=FloorIdentifier(value=address_floor) if address_floor else None,
-                suite_identifier=SuiteIdentifier(value=address_suite) if address_suite else None,
-                district_subdivision_identifier=DistrictSubdivisionIdentifier(value=address_district),
-                post_code_identifier=PostCodeIdentifier(value=postal_code),
                 country_identification_code=CountryIdentificationCode(
                     value=country_code,
                     scheme=CountryIdentificationSchemeType.ISO3166_ALPHA2
