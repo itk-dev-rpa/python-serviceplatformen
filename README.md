@@ -165,7 +165,8 @@ forsendelse = ForsendelseI(
     forsendelse_type_identifikator=ForsendelseTypeIdentifikator(value=265),
     forsendelse_modtager=ForsendelseModtager(
         afsendelse_modtager=AfsendelseModtager(
-            cpr_nummer_identifikator=CPRnummerIdentifikator(value="1234567890")
+            # Note that this should always be '0000000000' according to the documentation.
+            cpr_nummer_identifikator=CPRnummerIdentifikator(value="0000000000")
         ),
         modtager_adresse=ModtagerAdresse(
             person_name=PersonName(value="Test Testesen"),
