@@ -17,7 +17,7 @@ from python_serviceplatformen.authentication import KombitAccess
 from python_serviceplatformen.date_helper import format_datetime
 from python_serviceplatformen.models import xml_util
 from python_serviceplatformen.models.message import Message
-from python_serviceplatformen.models.physical_mail import ForsendelseI
+from python_serviceplatformen.models.physical_mail import ForsendelseI, ForsendelseISamling, KombiRequest
 
 
 def is_registered(id_: str, service: Literal['digitalpost', 'nemsms'], kombit_access: KombitAccess) -> bool:
@@ -113,14 +113,11 @@ def send_physical_mail(forsendelse: ForsendelseI, kombit_access: KombitAccess) -
         context=XmlContext(),
         config=SerializerConfig(xml_declaration=False)
     )
-    forsendelse_element = ElementTree.fromstring(serializer.render(forsendelse))
-
-    element = ElementTree.Element("kombi_request")
-    ElementTree.SubElement(element, "KombiValgKode").text = "Fysisk Post"
-    samling = ElementTree.SubElement(element, "{urn:oio:fjernprint:1.0.0}ForsendelseISamling")
-    samling.append(forsendelse_element)
-
-    xml_body = ElementTree.tostring(element, encoding="utf8").decode()
+    kombi_request = KombiRequest(
+        kombi_valg_kode="Fysisk Post",
+        forsendelse_i_samling=ForsendelseISamling(forsendelse_i=forsendelse),
+    )
+    xml_body = serializer.render(kombi_request)
 
     response = requests.post(url=url, headers=headers, data=xml_body, cert=kombit_access.cert_path, timeout=10)
     response.raise_for_status()
