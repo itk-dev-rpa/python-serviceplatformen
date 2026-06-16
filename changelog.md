@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.2.0] - 2026-06-16
+
+### Added
+
+- Models to describe physical mail (Fjernpost).
+- Function to send physical mail.
+
 ## [3.1.0] - 2025-10-08
 
 ### Added
@@ -57,7 +64,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Module for authenticating towards Kombit's Serviceplatform API.
 - Function for checking if someone is registered for Digital Post or NemSMS.
 
-[Unreleased]: https://github.com/itk-dev-rpa/python-serviceplatformen/compare/3.1.0...HEAD
+[Unreleased]: https://github.com/itk-dev-rpa/python-serviceplatformen/compare/3.2.0...HEAD
+[3.2.0]: https://github.com/itk-dev-rpa/python-serviceplatformen/releases/tag/3.2.0
 [3.1.0]: https://github.com/itk-dev-rpa/python-serviceplatformen/releases/tag/3.1.0
 [3.0.1]: https://github.com/itk-dev-rpa/python-serviceplatformen/releases/tag/3.0.1
 [3.0.0]: https://github.com/itk-dev-rpa/python-serviceplatformen/releases/tag/3.0.0
