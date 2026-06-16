@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Models to describe physical mail (Fjernpost).
+- Function to send physical mail.
+
 ## [3.1.0] - 2025-10-08
 
 ### Added
